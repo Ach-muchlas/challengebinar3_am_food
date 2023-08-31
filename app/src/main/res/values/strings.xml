@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">A&amp;MFood</string>
+    <string name="this_app_bar_view">this app bar view</string>
+    <string name="more_icons">more icons</string>
+    <string name="surabaya_jatim">Surabaya, Jatim</string>
+    <string name="location">location</string>
+    <string name="text_banner">What would you \nlike to eat ?</string>
+    <string name="check_out">Check Out</string>
+    <string name="find_your_food">Find Your Food...</string>
+</resources>
