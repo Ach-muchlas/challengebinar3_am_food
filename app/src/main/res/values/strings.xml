@@ -2,9 +2,31 @@
     <string name="app_name">A&amp;MFood</string>
     <string name="this_app_bar_view">this app bar view</string>
     <string name="more_icons">more icons</string>
-    <string name="surabaya_jatim">Surabaya, Jatim</string>
+    <string name="lombok">Lombok, NTB</string>
     <string name="location">location</string>
-    <string name="text_banner">What would you \nlike to eat ?</string>
+    <string name="text_banner1">What would you </string>
     <string name="check_out">Check Out</string>
-    <string name="find_your_food">Find Your Food...</string>
+    <string name="find_your_food">Find Your Food…</string>
+    <string name="category">Find by Category</string>
+    <string name="burger">Burger</string>
+    <string name="see_all">See All</string>
+    <string name="text_banner2">like</string>
+    <string name="text_banner3">to eat ?</string>
+    <string name="arrow">arrow</string>
+    <string name="home">Home</string>
+    <string name="message">Message</string>
+    <string name="profile">Profile</string>
+    <string name="image_item">Image Item</string>
+    <string name="icon_start">Icon Start</string>
+    <string name="rating">5.0</string>
+    <string name="burger_with_meat">Burger With Meat</string>
+    <string name="love">Love</string>
+    <string name="dollar">$17,20</string>
+    <string name="taco">Taco</string>
+    <string name="drink">Drink</string>
+    <string name="pizza">Pizza</string>
+    <string name="like">Like</string>
+    <string name="order">Order</string>
+    <string name="back">Back</string>
+
 </resources>
