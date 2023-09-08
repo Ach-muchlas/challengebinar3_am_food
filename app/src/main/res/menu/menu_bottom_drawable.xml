@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/home"
+        android:id="@+id/menuHome"
         android:icon="@drawable/home"
         android:title="@string/home" />
     <item
-        android:id="@+id/like"
+        android:id="@+id/menuLike"
         android:icon="@drawable/like"
         android:title="@string/like" />
     <item
-        android:id="@+id/message"
+        android:id="@+id/menuMessage"
         android:icon="@drawable/message"
         android:title="@string/message" />
     <item
-        android:id="@+id/profile"
+        android:id="@+id/menuProfile"
         android:icon="@drawable/user"
         android:title="@string/profile" />
 </menu>

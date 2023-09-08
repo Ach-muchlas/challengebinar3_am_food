@@ -28,5 +28,23 @@
     <string name="like">Like</string>
     <string name="order">Order</string>
     <string name="back">Back</string>
+    <string name="me">foto saya</string>
+    <string name="name">Name</string>
+    <string name="my_name">Achmad Muchlasin</string>
+    <string name="my_photos">My Photos</string>
+    <string name="bio">Android Developer</string>
+    <string name="project">Project</string>
+    <string name="null_">null</string>
+    <string name="followers">Followers</string>
+    <string name="ten">10</string>
+    <string name="rate">Rating</string>
+    <string name="sosial_media">SOSIAL MEDIA</string>
+    <string name="instagram">Instagram</string>
+    <string name="ach_muchlasin">\@ach_muchlasin</string>
+    <string name="titik_dua">:</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="academy">Android Engineering \nCourse at \nBinar Academy</string>
+    <string name="github">Github</string>
 
 </resources>

@@ -12,12 +12,6 @@ import com.am.amfood.ui.DetailActivity
 class ListCardAdapter(private val context: Context, private val listItem: MutableList<CardModel>) :
     RecyclerView.Adapter<ListCardAdapter.ListViewHolder>() {
 
-    private lateinit var onItemClickCallBack: OnItemClickCallback
-
-    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
-        this.onItemClickCallBack = onItemClickCallback
-    }
-
     class ListViewHolder(var binding: ContainerItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
@@ -39,9 +33,5 @@ class ListCardAdapter(private val context: Context, private val listItem: Mutabl
             val intent = Intent(context, DetailActivity::class.java)
             context.startActivity(intent)
         }
-    }
-
-    interface OnItemClickCallback {
-        fun onItemClicked(data: CardModel)
     }
 }
