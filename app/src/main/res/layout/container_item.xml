@@ -35,7 +35,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardShop"
+            android:id="@+id/cardLike"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginTop="5dp"
@@ -47,6 +47,7 @@
             app:layout_constraintTop_toTopOf="@id/cardImageViewItem">
 
             <ImageView
+                android:id="@+id/like"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="center"

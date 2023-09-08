@@ -89,12 +89,26 @@
     <include
         android:id="@+id/cardFollowers"
         layout="@layout/card_follower"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         app:layout_constraintTop_toBottomOf="@id/cardMyPhotos" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineVertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.3" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineVertical2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.35" />
 
     <TextView
         android:id="@+id/textViewSosialMedia"
@@ -119,7 +133,6 @@
         app:layout_constraintTop_toBottomOf="@id/textViewSosialMedia" />
 
     <TextView
-        android:id="@+id/titikDua1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -128,13 +141,13 @@
         app:layout_constraintTop_toBottomOf="@id/textViewSosialMedia" />
 
     <TextView
+        android:id="@+id/textViewValueInstagram"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/coco_reg"
         android:text="@string/ach_muchlasin"
-        app:layout_constraintStart_toEndOf="@id/titikDua1"
+        app:layout_constraintStart_toEndOf="@id/guidelineVertical2"
         app:layout_constraintTop_toBottomOf="@id/textViewSosialMedia" />
 
     <TextView
@@ -148,12 +161,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textViewInstagram" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineVertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.3" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -161,15 +168,15 @@
         android:text="@string/titik_dua"
         app:layout_constraintStart_toEndOf="@id/guidelineVertical"
         app:layout_constraintTop_toTopOf="@id/textViewGithub"
-        app:layout_constraintBottom_toBottomOf="@id/textViewGithub"/>
+        app:layout_constraintBottom_toBottomOf="@id/textViewGithub" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/coco_reg"
         android:text="@string/ach_muchlasin"
-        app:layout_constraintStart_toEndOf="@id/titikDua"
-        app:layout_constraintTop_toBottomOf="@id/textViewSosialMedia" />
+        app:layout_constraintStart_toEndOf="@id/guidelineVertical2"
+        app:layout_constraintTop_toBottomOf="@id/textViewValueInstagram" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
