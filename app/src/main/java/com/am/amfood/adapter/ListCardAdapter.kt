@@ -9,7 +9,7 @@ import com.am.amfood.databinding.ContainerItemBinding
 import com.am.amfood.model.CardModel
 import com.am.amfood.ui.DetailActivity
 
-class ListCardAdapter(private val context: Context, private val listItem: MutableList<CardModel>) :
+class ListCardAdapter(private val context: Context, private val listItem: ArrayList<CardModel>) :
     RecyclerView.Adapter<ListCardAdapter.ListViewHolder>() {
 
     class ListViewHolder(var binding: ContainerItemBinding) :
@@ -30,8 +30,9 @@ class ListCardAdapter(private val context: Context, private val listItem: Mutabl
         holder.binding.textViewPrice.text = priceItem
         holder.binding.imageViewItem.setImageResource(photoItem)
         holder.itemView.setOnClickListener {
-            val intent = Intent(context, DetailActivity::class.java)
-            context.startActivity(intent)
+            val intent = Intent(holder.itemView.context, DetailActivity::class.java)
+            intent.putExtra(DetailActivity.EXTRA_NAME, listItem)
+            holder.itemView.context.startActivity(intent)
         }
     }
 }

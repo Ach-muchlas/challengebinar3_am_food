@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/menuHome"
+        android:id="@+id/navigation_home"
         android:icon="@drawable/home"
-        android:title="@string/home" />
+        android:title="@string/title_home" />
     <item
-        android:id="@+id/menuLike"
+        android:id="@+id/navigation_like"
         android:icon="@drawable/like"
-        android:title="@string/like" />
+        android:title="@string/title_like" />
+
     <item
-        android:id="@+id/menuMessage"
-        android:icon="@drawable/message"
-        android:title="@string/message" />
+        android:id="@+id/navigation_history"
+        android:icon="@drawable/history"
+        android:title="@string/title_history" />
+
     <item
-        android:id="@+id/menuProfile"
-        android:icon="@drawable/user"
-        android:title="@string/profile" />
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/profile"
+        android:title="@string/title_profile" />
+
 </menu>
