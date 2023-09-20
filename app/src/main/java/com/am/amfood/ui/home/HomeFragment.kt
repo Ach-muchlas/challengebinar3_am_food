@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.am.amfood.R
 import com.am.amfood.adapter.ListCardAdapter
@@ -13,7 +14,6 @@ import com.am.amfood.model.dummyDataCard
 
 class HomeFragment : Fragment() {
     private var _binding : FragmentHomeBinding? = null
-
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -31,6 +31,10 @@ class HomeFragment : Fragment() {
         binding.apply {
             rvCardItem.layoutManager = GridLayoutManager(requireActivity(), 2)
             rvCardItem.adapter = adapter
+
+//            cardProfile.setOnClickListener {
+//                it.findNavController().navigate(R.id.action_navigation_home_to_navigation_profile)
+//            }
         }
     }
 
