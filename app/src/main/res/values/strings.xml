@@ -53,6 +53,12 @@
     <string name="title_like">Like</string>
     <string name="title_history">History</string>
     <string name="title_profile">Profile</string>
+    <string name="startrate">startRate</string>
+    <string name="deskirpsi">Description</string>
+    <string name="lokasi">Location</string>
+    <string name="map">map</string>
+    <string name="price">Price</string>
+    <string name="icon_store">icon store</string>
 
 
 </resources>
