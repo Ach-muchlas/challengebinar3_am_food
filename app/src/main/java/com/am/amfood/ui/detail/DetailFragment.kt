@@ -1,5 +1,7 @@
 package com.am.amfood.ui.detail
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -34,25 +36,25 @@ class DetailFragment : Fragment() {
 
         val cardModel: CardModel = args.objectParcelable
 
-        binding.imageProduct.setImageResource(cardModel.imageProduct)
-        binding.textViewNameItem.text = cardModel.name
-        binding.textViewValueDesc.text = cardModel.desc
-        binding.textViewValuePrice.text = cardModel.price
-        binding.textViewValueLocation.text = cardModel.location
+        binding.apply {
+            imageProduct.setImageResource(cardModel.imageProduct)
+            textViewNameItem.text = cardModel.name
+            textViewValueDesc.text = cardModel.desc
+            textViewValuePrice.text = cardModel.price
+            textViewValueLocation.text = cardModel.location
+            Ratingbar.rating = cardModel.rate.toFloat()
+            iconMaps.setOnClickListener {
+                val uri =
+                    Uri.parse("http://maps.google.com/maps?q=loc:${cardModel.lat},${cardModel.long}")
+                val mapIntent = Intent(Intent.ACTION_VIEW, uri)
+                mapIntent.setPackage("com.google.android.apps.maps")
+                startActivity(mapIntent)
+            }
 
-        val rating = cardModel.rate.toFloat()
-
-        if (rating != null) {
-            binding.Ratingbar.rating = rating
-        } else {
-            binding.Ratingbar.rating = 0f
+            cardBack.setOnClickListener {
+                it.findNavController().navigate(R.id.action_detailFragment_to_navigation_home)
+            }
         }
-
-        binding.cardBack.setOnClickListener {
-            it.findNavController().navigate(R.id.action_detailFragment_to_navigation_home)
-        }
-
-
     }
 
     override fun onDestroy() {
@@ -61,5 +63,4 @@ class DetailFragment : Fragment() {
         val bottom = activity?.findViewById<BottomNavigationView>(R.id.bottomNavigation)
         bottom?.visibility = View.VISIBLE
     }
-
 }

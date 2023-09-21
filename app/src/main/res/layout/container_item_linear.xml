@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_marginHorizontal="10dp"
+    android:layout_marginTop="10dp"
+    android:layout_height="160dp"
+    android:layout_marginBottom="10dp"
+    android:background="@drawable/corner_full"
+    android:elevation="8dp"
+    app:cardCornerRadius="20dp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardImage"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginHorizontal="16dp"
+        android:elevation="8dp"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageProductLinear"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/image_item"
+            android:scaleType="centerCrop"
+            tools:src="@tools:sample/backgrounds/scenic" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/tvNameProductLinear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="40dp"
+        android:fontFamily="@font/coco_bold"
+        android:text="@string/name"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@id/cardImage"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <ImageView
+        android:id="@+id/iconStart"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="5dp"
+        android:contentDescription="@string/icon_start"
+        android:src="@drawable/star"
+        app:layout_constraintStart_toEndOf="@id/cardImage"
+        app:layout_constraintTop_toBottomOf="@id/tvNameProductLinear" />
+
+    <TextView
+        android:textSize="16sp"
+        android:id="@+id/tvRateProductLinear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:fontFamily="@font/coco_reg"
+        android:text="@string/rating"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@id/iconStart"
+        app:layout_constraintStart_toEndOf="@id/iconStart"
+        app:layout_constraintTop_toTopOf="@id/iconStart" />
+
+    <TextView
+        android:id="@+id/tvPriceProductLinear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/iconStart"
+        android:text="@string/dollar"
+        android:textSize="20sp"
+        android:fontFamily="@font/coco_bold"
+        android:textColor="@color/gold"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toEndOf="@id/cardImage"
+        android:layout_marginStart="16dp"/>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:cardCornerRadius="15dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <ImageView
+            android:id="@+id/like"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/love"
+            android:elevation="10dp"
+            android:src="@drawable/love" />
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

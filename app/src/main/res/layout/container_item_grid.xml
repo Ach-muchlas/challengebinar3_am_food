@@ -41,7 +41,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
             android:elevation="10dp"
-            app:cardCornerRadius="40dp"
+            app:cardCornerRadius="15dp"
             app:cardElevation="10dp"
             app:layout_constraintEnd_toEndOf="@id/cardImageViewItem"
             app:layout_constraintTop_toTopOf="@id/cardImageViewItem">
@@ -64,8 +64,7 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="5dp"
-            android:fontFamily="@font/coco_reg"
-            android:textStyle="bold"
+            android:fontFamily="@font/coco_bold"
             android:maxLines="2"
             android:text="@string/burger_with_meat"
             android:textColor="@color/black"
@@ -98,9 +97,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginStart="5dp"
+                android:textStyle="bold"
                 android:layout_marginBottom="10dp"
                 android:gravity="center_vertical"
                 android:text="@string/rating"
+                android:fontFamily="@font/coco_reg"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
         </LinearLayout>
@@ -114,7 +115,7 @@
             android:text="@string/dollar"
             android:textColor="@color/gold"
             android:textSize="20sp"
-            android:textStyle="bold"
+            android:fontFamily="@font/coco_bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/linearLayout" />
