@@ -85,7 +85,5 @@
         <include
             android:id="@+id/layoutContentDetail"
             layout="@layout/content_detail_fragment" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </androidx.core.widget.NestedScrollView>

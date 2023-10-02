@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_margin="10dp"
     android:layout_height="match_parent"
-    tools:context=".ui.history.HistoryFragment">
+    tools:context=".ui.keranjang.HistoryFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <androidx.recyclerview.widget.RecyclerView

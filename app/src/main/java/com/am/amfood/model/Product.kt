@@ -4,7 +4,7 @@ import com.am.amfood.R
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class CardModel(
+data class Product(
     val name: String,
     val rate: Double,
     val price: String,
@@ -16,8 +16,8 @@ data class CardModel(
     val long : Double? = null,
 ) : Parcelable
 
-val dummyDataCard = arrayListOf<CardModel>(
-    CardModel(
+val dummyDataCard = arrayListOf<Product>(
+    Product(
         "Beef Burger",
         5.0,
         "$ 17,80",
@@ -27,7 +27,7 @@ val dummyDataCard = arrayListOf<CardModel>(
         R.drawable.burger_detail,
         -7.309267553447969, 112.73451225824547
     ),
-    CardModel(
+    Product(
         "Chicken Burger",
         5.0,
         "$ 16,20",
@@ -38,7 +38,7 @@ val dummyDataCard = arrayListOf<CardModel>(
         -7.2890670922445135,
         112.67524545117689
     ),
-    CardModel(
+    Product(
         "Cheese Burger",
         4.5,
         "$ 10,80",
@@ -48,7 +48,7 @@ val dummyDataCard = arrayListOf<CardModel>(
         R.drawable.burger_detail,
         -7.263449316189823, 112.74077437142043
     ),
-    CardModel(
+    Product(
         "Fish Burger",
         4.0,
         "$ 20,90",
@@ -58,7 +58,7 @@ val dummyDataCard = arrayListOf<CardModel>(
         R.drawable.burger_detail,
         -7.271276724001825, 112.80502808430249
     ),
-    CardModel(
+    Product(
         "Cadian Taco",
         3.5,
         "$ 21,0",
@@ -68,7 +68,7 @@ val dummyDataCard = arrayListOf<CardModel>(
         R.drawable.burger_detail,
         -7.2891180, 112.6551310
     ),
-    CardModel(
+    Product(
         "Purple Rain",
         4.5,
         "$ 10,5",
