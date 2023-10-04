@@ -6,6 +6,7 @@ import android.widget.ImageView
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.navigation.NavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -27,7 +28,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         _isGrid.value = sharedPreferences.getBoolean(PREF_LAYOUT, true)
     }
 
-    fun toggleView() {
+    fun changeLayout() {
         val isGridLayout = _isGrid.value ?: true
         _isGrid.value = !isGridLayout
 
@@ -52,6 +53,9 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         recyclerView.adapter = MenuAdapter(dummyDataCard, isGrid)
     }
 
+    fun navigateToProfile(navController: NavController){
+        navController.navigate(R.id.action_navigation_home_to_navigation_profile)
+    }
 
 
 }

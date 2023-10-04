@@ -3,12 +3,14 @@ package com.am.amfood.ui.detail
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import com.am.amfood.R
 import com.am.amfood.model.Product
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class DetailViewModel : ViewModel() {
     private val _card = MutableLiveData<Product>()

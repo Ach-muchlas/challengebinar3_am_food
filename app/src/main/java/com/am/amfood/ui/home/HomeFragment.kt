@@ -6,6 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.am.amfood.R
 import com.am.amfood.adapter.MenuAdapter
 import com.am.amfood.databinding.FragmentHomeBinding
 
@@ -26,11 +29,17 @@ class HomeFragment : Fragment() {
             viewModel.setUpLayoutManager(requireContext(), binding.rvCardItem, isGrid)
 
             binding.iconGridOrList.setOnClickListener {
-                viewModel.toggleView()
+                viewModel.changeLayout()
             }
 
             viewModel.setUpChangeIcon(binding.iconGridOrList, isGrid)
+
+            binding.cardProfile.setOnClickListener {
+                viewModel.navigateToProfile(findNavController())
+            }
         }
+
+
 
         return binding.root
     }

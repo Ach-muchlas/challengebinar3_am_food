@@ -25,9 +25,9 @@
         tools:layout="@layout/fragment_like" />
 
     <fragment
-        android:id="@+id/navigation_history"
-        android:name="com.am.amfood.ui.keranjang.HistoryFragment"
-        android:label="@string/title_history"
+        android:id="@+id/navigation_keranjang"
+        android:name="com.am.amfood.ui.keranjang.KeranjangFragment"
+        android:label="@string/title_keranjang"
         tools:layout="@layout/fragment_keranjang" />
 
     <fragment
@@ -38,9 +38,7 @@
         <action
             android:id="@+id/action_navigation_profile_to_navigation_home"
             app:destination="@id/navigation_home"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/navigation_home"
-            app:popUpToInclusive="true" />
+            app:popUpTo="@id/main_nav" />
     </fragment>
 
     <fragment
@@ -51,7 +49,7 @@
 
         <argument
             android:name="object_parcelable"
-            app:argType="com.am.amfood.model.CardModel" />
+            app:argType="com.am.amfood.model.Product" />
         <argument
             android:name="name"
             app:argType="string"
@@ -59,6 +57,12 @@
         <action
             android:id="@+id/action_detailFragment_to_navigation_home"
             app:destination="@id/navigation_home"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/navigation_home"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_detailFragment_to_navigation_keranjang"
+            app:destination="@id/navigation_keranjang"
             app:launchSingleTop="true"
             app:popUpTo="@id/navigation_home"
             app:popUpToInclusive="true" />
