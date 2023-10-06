@@ -1,5 +1,6 @@
 package com.am.amfood.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.findNavController
@@ -8,8 +9,12 @@ import com.am.amfood.databinding.ContainerItemGridBinding
 import com.am.amfood.databinding.ContainerItemLinearBinding
 import com.am.amfood.model.Product
 import com.am.amfood.ui.home.HomeFragmentDirections
+import com.am.amfood.utils.Utils.formatCurrency
 
-class MenuAdapter(private val data: ArrayList<Product>, private val isGrid : Boolean) :
+class MenuAdapter(
+    private val data: ArrayList<Product>,
+    private val isGrid: Boolean
+) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     inner class MenuLinearViewHolder(private var binding: ContainerItemLinearBinding) :
@@ -18,17 +23,18 @@ class MenuAdapter(private val data: ArrayList<Product>, private val isGrid : Boo
             binding.imageProductLinear.setImageResource(cardModel.photo)
             binding.tvNameProductLinear.text = cardModel.name
             binding.tvRateProductLinear.text = cardModel.rate.toString()
-            binding.tvPriceProductLinear.text = cardModel.price
+            binding.tvPriceProductLinear.text = formatCurrency(cardModel.price)
         }
     }
 
     inner class MenuGridViewHolder(private var binding: ContainerItemGridBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
         fun bindContentGrid(cardModel: Product) {
             binding.imageViewItem.setImageResource(cardModel.photo)
             binding.textViewNameItem.text = cardModel.name
             binding.textViewRating.text = cardModel.rate.toString()
-            binding.textViewPrice.text = cardModel.price
+            binding.textViewPrice.text = formatCurrency(cardModel.price)
         }
     }
 

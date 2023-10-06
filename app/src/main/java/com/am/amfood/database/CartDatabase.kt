@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.am.amfood.model.Cart
 
-@Database(entities = [Cart::class], version = 1)
+@Database(entities = [Cart::class], version = 5)
 abstract class CartDatabase : RoomDatabase() {
     abstract fun cartDao(): CartDao
 
@@ -22,7 +22,8 @@ abstract class CartDatabase : RoomDatabase() {
             synchronized(this) {
                 val roomDatabaseInstance =
                     Room.databaseBuilder(context, CartDatabase::class.java, "Cart")
-                        .allowMainThreadQueries().build()
+                        .allowMainThreadQueries().fallbackToDestructiveMigration()
+                        .build()
                 INSTANCE = roomDatabaseInstance
                 return roomDatabaseInstance
             }

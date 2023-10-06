@@ -75,7 +75,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/iconStart"
-        android:text="@string/dollar"
+        android:text="@string/current_symbol"
         android:textSize="20sp"
         android:fontFamily="@font/coco_bold"
         android:textColor="@color/gold"

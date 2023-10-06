@@ -51,7 +51,7 @@
     <string name="icon_list">ListIcon</string>
     <string name="title_home">Home</string>
     <string name="title_like">Like</string>
-    <string name="title_keranjang">Keranjang</string>
+    <string name="title_cart">Cart</string>
     <string name="title_profile">Profile</string>
     <string name="startrate">startRate</string>
     <string name="deskirpsi">Description</string>
@@ -61,6 +61,16 @@
     <string name="icon_store">icon store</string>
     <string name="image_product">Image Product</string>
     <string name="imaga_recyclerbin">Imaga RecyclerBin</string>
+    <string name="icon_plus">icon plus</string>
+    <string name="icon_minus">Icon Minus</string>
+    <string name="current_symbol">Rp. </string>
+    <string name="catatan">Catatan</string>
+    <string name="keranjang">Keranjang</string>
+    <string name="total_price">Total Harga</string>
+    <string name="pesan">Pesan</string>
+    <string name="method">Metode Pengiriman</string>
+    <string name="ambil_sendiri">Ambil Sendiri</string>
+    <string name="send">Dikirim</string>
 
 
 </resources>

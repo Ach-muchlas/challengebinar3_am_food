@@ -38,7 +38,6 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     fun setUpChangeIcon(imageView: ImageView, isGrid: Boolean) {
         val iconGrid = R.drawable.more
         val iconList = R.drawable.list
-
         imageView.setImageResource(if (isGrid) iconGrid else iconList)
     }
 
@@ -48,14 +47,10 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         } else {
             LinearLayoutManager(context)
         }
-
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = MenuAdapter(dummyDataCard, isGrid)
     }
 
-    fun navigateToProfile(navController: NavController){
-        navController.navigate(R.id.action_navigation_home_to_navigation_profile)
-    }
 
 
 }

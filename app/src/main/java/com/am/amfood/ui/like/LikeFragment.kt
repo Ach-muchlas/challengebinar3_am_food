@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.am.amfood.databinding.FragmentHomeBinding
 import com.am.amfood.databinding.FragmentLikeBinding
@@ -23,15 +24,6 @@ class LikeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-//        /*Can't click on the item*/
-//        /*just a look*/
-//        val adapter = MenuAdapter(dummyDataCard)
-//        binding.apply {
-//            rvMenuLike.hasFixedSize()
-//            rvMenuLike.layoutManager = GridLayoutManager(requireContext(), 2)
-//            rvMenuLike.adapter = adapter
-//        }
 
     }
 

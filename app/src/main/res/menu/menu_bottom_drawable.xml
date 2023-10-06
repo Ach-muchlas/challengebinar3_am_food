@@ -13,9 +13,9 @@
         android:title="@string/title_like" />
 
     <item
-        android:id="@+id/navigation_keranjang"
+        android:id="@+id/navigation_cart"
         android:icon="@drawable/history"
-        android:title="@string/title_keranjang" />
+        android:title="@string/title_cart" />
 
     <item
         android:id="@+id/navigation_profile"
