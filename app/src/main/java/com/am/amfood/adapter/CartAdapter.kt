@@ -1,8 +1,6 @@
 package com.am.amfood.adapter
 
-import android.content.Context
-import android.text.Editable
-import android.text.TextWatcher
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -11,12 +9,11 @@ import com.am.amfood.model.Cart
 import com.am.amfood.utils.Utils.formatCurrency
 
 class CartAdapter(
-    context: Context,
     private val data: List<Cart>,
     private var onDeleteClickListener: ((Cart) -> Unit)? = null,
     private var onPlusClickLister: ((Cart) -> Unit)? = null,
     private var onMinusClickLister: ((Cart) -> Unit)? = null,
-    private var addNote: ((Cart) -> Unit)? = null
+    private var addNote: ((Cart) -> Unit)? = null,
 ) :
     RecyclerView.Adapter<CartAdapter.ViewHolder>() {
 
@@ -54,17 +51,20 @@ class CartAdapter(
             binding.btnMinus.setOnClickListener {
                 onMinusClickLister?.invoke(cart)
             }
-            binding.edtNote.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-
-                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-
-                override fun afterTextChanged(p0: Editable?) {
-                    cart.note = p0.toString()
-                    addNote?.invoke(cart)
+            val edt = binding.edtNote
+            edt.setOnKeyListener { _, keyCode, event ->
+                if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                    val newText = edt.text.toString().trim()
+                    if (newText.isNotEmpty()) {
+                        cart.note = newText
+                        addNote?.invoke(cart)
+                    }
+                    true
+                } else {
+                    false
                 }
-
-            })
+            }
+            edt.setText(cart.note)
         }
     }
 
@@ -84,17 +84,4 @@ class CartAdapter(
         holder.bindContent(data[position])
     }
 
-    fun incrementQuantity(position: Int) {
-        val cartItem = data[position]
-        cartItem.quantityMenu++
-        notifyDataSetChanged()
-    }
-
-    fun decrementQuantity(position: Int) {
-        val cartItem = data[position]
-        if (cartItem.quantityMenu > 1) {
-            cartItem.quantityMenu--
-            notifyDataSetChanged()
-        }
-    }
 }

@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.am.amfood.R
 import com.am.amfood.databinding.FragmentHomeBinding
 import com.am.amfood.utils.Utils
+import com.am.amfood.utils.Utils.HOME_TO_PROFILE
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
@@ -22,6 +24,8 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        val bottom = activity?.findViewById<BottomNavigationView>(R.id.bottomNavigation)
+        bottom?.visibility = View.VISIBLE
 
 
         setUpLayoutManager()
@@ -46,7 +50,7 @@ class HomeFragment : Fragment() {
 
     private fun navigateToProfile() {
         binding.cardProfile.setOnClickListener {
-            util.navigateToDestination(util.TO_PROFILE, findNavController())
+            util.navigateToDestination(HOME_TO_PROFILE, findNavController())
         }
     }
 }

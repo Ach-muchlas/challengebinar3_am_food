@@ -14,8 +14,8 @@ import com.am.amfood.databinding.FragmentDetailBinding
 import com.am.amfood.model.Cart
 import com.am.amfood.model.Product
 import com.am.amfood.ui.cart.CartViewModel
-import com.am.amfood.utils.Utils.TO_CART
-import com.am.amfood.utils.Utils.TO_HOME
+import com.am.amfood.utils.Utils.DETAIL_TO_CART
+import com.am.amfood.utils.Utils.DETAIL_TO_HOME
 import com.am.amfood.utils.Utils.formatCurrency
 import com.am.amfood.utils.Utils.navigateToDestination
 import com.am.amfood.utils.Utils.navigateToMaps
@@ -66,7 +66,7 @@ class DetailFragment : Fragment() {
             binding.apply {
                 imageProduct.setImageResource(card.imageProduct)
                 cardBack.setOnClickListener {
-                    navigateToDestination(TO_HOME, findNavController())
+                    navigateToDestination(DETAIL_TO_HOME, findNavController())
                 }
                 with(layoutContentDetail) {
                     textViewNameItem.text = card.name
@@ -103,7 +103,7 @@ class DetailFragment : Fragment() {
             with(layoutContentDetail) {
                 btnOrder.setOnClickListener {
                     addOrder()
-                    navigateToDestination(TO_CART, findNavController())
+                    navigateToDestination(DETAIL_TO_CART, findNavController())
                 }
             }
         }

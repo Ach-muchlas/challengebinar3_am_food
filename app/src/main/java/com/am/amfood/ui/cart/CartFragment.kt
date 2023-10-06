@@ -6,21 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.am.amfood.R
 import com.am.amfood.adapter.CartAdapter
 import com.am.amfood.databinding.FragmentCartBinding
-import com.am.amfood.ui.detail.DetailViewModel
-import com.am.amfood.utils.Utils
+import com.am.amfood.utils.Utils.CART_TO_CHECKOUT
+import com.am.amfood.utils.Utils.formatCurrency
+import com.am.amfood.utils.Utils.navigateToDestination
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class CartFragment : Fragment() {
     private var _binding: FragmentCartBinding? = null
     private val binding get() = _binding!!
     private val viewModel: CartViewModel by viewModels()
-    private val viewModelDetail: DetailViewModel by viewModels()
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -34,7 +33,7 @@ class CartFragment : Fragment() {
         binding.appbar.btnBack.visibility = View.GONE
 
         viewModel.getAllCart().observe(viewLifecycleOwner) { list ->
-            val adapter = CartAdapter(requireContext(), list)
+            val adapter = CartAdapter(list)
             binding.rvCart.layoutManager = LinearLayoutManager(requireContext())
             binding.rvCart.adapter = adapter
 
@@ -59,11 +58,12 @@ class CartFragment : Fragment() {
             adapter.setAddNote { note ->
                 viewModel.updateCart(note)
             }
-            binding.layoutCheckOut.textViewTotalPrice.text = Utils.formatCurrency(totalPayment)
+
+            binding.layoutCheckOut.textViewTotalPrice.text = formatCurrency(totalPayment)
         }
 
         binding.layoutCheckOut.btnContentPesan.setOnClickListener {
-            it.findNavController().navigate(R.id.action_navigation_cart_to_checkOutFragment)
+            navigateToDestination(CART_TO_CHECKOUT, findNavController())
         }
 
         return binding.root

@@ -71,6 +71,7 @@
     <string name="method">Metode Pengiriman</string>
     <string name="ambil_sendiri">Ambil Sendiri</string>
     <string name="send">Dikirim</string>
+    <string name="konfirmasi_pesanan">Konfirmasi Pesanan</string>
 
 
 </resources>

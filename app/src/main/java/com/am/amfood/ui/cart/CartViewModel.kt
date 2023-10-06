@@ -28,7 +28,13 @@ class CartViewModel(application: Application) : AndroidViewModel(application) {
 
     fun updateCart(cart: Cart) {
         viewModelScope.launch {
-            repository.updateCart(cart)
+            try {
+                repository.updateCart(cart)
+                _messageToast.value = "Data Saved"
+            } catch (e: Exception) {
+                _messageToast.value = "Gagal Saved : $e"
+            }
+
         }
     }
 
