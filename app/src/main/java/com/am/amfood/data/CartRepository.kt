@@ -1,6 +1,7 @@
-package com.am.amfood.database
+package com.am.amfood.data
 
 import androidx.lifecycle.LiveData
+import com.am.amfood.data.lokal.CartDao
 import com.am.amfood.model.Cart
 
 class CartRepository(private val dao: CartDao) {

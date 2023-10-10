@@ -1,4 +1,4 @@
-package com.am.amfood.database
+package com.am.amfood.data.lokal
 
 import android.content.Context
 import androidx.room.Database

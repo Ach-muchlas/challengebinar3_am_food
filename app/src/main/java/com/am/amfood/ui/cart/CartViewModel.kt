@@ -5,8 +5,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.am.amfood.database.CartDatabase
-import com.am.amfood.database.CartRepository
+import com.am.amfood.data.lokal.CartDatabase
+import com.am.amfood.data.CartRepository
 import com.am.amfood.model.Cart
 import kotlinx.coroutines.launch
 

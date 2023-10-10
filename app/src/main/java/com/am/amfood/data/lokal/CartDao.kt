@@ -1,4 +1,4 @@
-package com.am.amfood.database
+package com.am.amfood.data.lokal
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
