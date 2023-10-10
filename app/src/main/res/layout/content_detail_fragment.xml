@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/contentDetailFragment"
     android:layout_width="match_parent"
-    android:layout_height="550dp"
+    android:layout_height="600dp"
     android:layout_marginTop="10dp"
     android:background="@drawable/custom_corner_top"
     android:paddingHorizontal="16dp"
@@ -120,15 +120,49 @@
         android:id="@+id/textViewValuePrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/price"
-
+        android:text="@string/ten"
         android:textColor="@color/gold"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textViewPrice" />
 
+    <TextView
+        android:id="@+id/textViewQuantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/coco_bold"
+        android:text="@string/ten"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewValuePrice" />
+
+    <ImageView
+        android:id="@+id/btnPlus"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="20dp"
+        android:contentDescription="@string/icon_plus"
+        android:src="@drawable/plus"
+        app:layout_constraintBottom_toBottomOf="@id/textViewQuantity"
+        app:layout_constraintStart_toEndOf="@id/textViewQuantity"
+        app:layout_constraintTop_toTopOf="@id/textViewQuantity" />
+
+    <ImageView
+        android:id="@+id/btnMinus"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="20dp"
+        android:contentDescription="@string/icon_minus"
+        android:src="@drawable/less"
+        app:layout_constraintBottom_toBottomOf="@id/textViewQuantity"
+        app:layout_constraintEnd_toStartOf="@id/textViewQuantity"
+        app:layout_constraintTop_toTopOf="@id/textViewQuantity" />
+
     <Button
+        android:id="@+id/btnOrder"
         style="@style/Widget.Material3.Button.OutlinedButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -136,6 +170,6 @@
         android:text="@string/order"
         android:textColor="@color/gold"
         android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@id/textViewValuePrice" />
+        app:layout_constraintTop_toBottomOf="@id/textViewQuantity" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

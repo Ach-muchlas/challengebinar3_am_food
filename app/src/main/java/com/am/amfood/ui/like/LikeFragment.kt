@@ -1,20 +1,16 @@
 package com.am.amfood.ui.like
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.GridLayoutManager
-import com.am.amfood.R
-import com.am.amfood.adapter.MenuAdapter
-import com.am.amfood.databinding.FragmentHomeBinding
+import androidx.fragment.app.Fragment
 import com.am.amfood.databinding.FragmentLikeBinding
-import com.am.amfood.model.dummyDataCard
 
 class LikeFragment : Fragment() {
     private var _binding : FragmentLikeBinding? = null
     private val binding get() = _binding!!
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,22 +18,6 @@ class LikeFragment : Fragment() {
     ): View {
         _binding = FragmentLikeBinding.inflate(inflater, container, false)
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        var bindingHome : FragmentHomeBinding
-
-        /*Can't click on the item*/
-        /*just a look*/
-        val adapter = MenuAdapter(dummyDataCard)
-        binding.apply {
-            rvMenuLike.hasFixedSize()
-            rvMenuLike.layoutManager = GridLayoutManager(requireContext(), 2)
-            rvMenuLike.adapter = adapter
-        }
-
     }
 
     override fun onDestroy() {

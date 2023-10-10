@@ -1,4 +1,4 @@
-package com.am.amfood.ui
+package com.am.amfood.ui.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -13,13 +13,17 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setUpDisplayBottomNavigation()
 
+    }
+
+    private fun setUpDisplayBottomNavigation() {
         val navView: BottomNavigationView = binding.bottomNavigation
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         navView.setupWithNavController(navController)
-
     }
 }

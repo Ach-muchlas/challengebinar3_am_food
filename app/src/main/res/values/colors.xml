@@ -4,5 +4,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="gold">#fcba03</color>
     <color name="gray">#E0E5E9</color>
+    <color name="old_gray">#B8B0B0</color>
     <color name="selected_color">#FF0000</color>
 </resources>

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="80dp"
-    tools:context=".ui.MainActivity">
+    tools:context=".ui.main.MainActivity">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -222,6 +222,5 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textViewList" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

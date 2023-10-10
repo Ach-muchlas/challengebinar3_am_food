@@ -5,45 +5,52 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.am.amfood.R
-import com.am.amfood.adapter.MenuAdapter
 import com.am.amfood.databinding.FragmentHomeBinding
-import com.am.amfood.model.dummyDataCard
+import com.am.amfood.utils.Utils
+import com.am.amfood.utils.Utils.HOME_TO_PROFILE
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class HomeFragment : Fragment() {
-    private var _binding : FragmentHomeBinding? = null
+    private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    private val viewModel: HomeViewModel by viewModels()
+    private lateinit var util: Utils
+
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        val bottom = activity?.findViewById<BottomNavigationView>(R.id.bottomNavigation)
+        bottom?.visibility = View.VISIBLE
+
+
+        setUpLayoutManager()
+        changeLayout()
+        navigateToProfile()
+
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val adapter = MenuAdapter(dummyDataCard)
+    private fun setUpLayoutManager() {
+        viewModel.isGrid.observe(viewLifecycleOwner) { isGrid ->
+            viewModel.setUpLayoutManager(requireContext(), binding.rvCardItem, isGrid)
+            viewModel.setUpChangeIcon(binding.iconGridOrList, isGrid)
+        }
+    }
 
-        val iconGrid = R.drawable.more
-        val iconList = R.drawable.list
+    private fun changeLayout() {
+        binding.iconGridOrList.setOnClickListener {
+            viewModel.changeLayout()
+        }
+    }
 
-
-        binding.apply {
-            rvCardItem.layoutManager = GridLayoutManager(requireActivity(), 2)
-            rvCardItem.adapter = adapter
-
-            iconGridOrList.setOnClickListener {
-                adapter.toggleView(rvCardItem)
-                iconGridOrList.setImageResource(if (adapter.isLinear) iconList else iconGrid)
-            }
-
-            cardProfile.setOnClickListener {
-                it.findNavController().navigate(R.id.action_navigation_home_to_navigation_profile)
-            }
+    private fun navigateToProfile() {
+        binding.cardProfile.setOnClickListener {
+            util.navigateToDestination(HOME_TO_PROFILE, findNavController())
         }
     }
 }
