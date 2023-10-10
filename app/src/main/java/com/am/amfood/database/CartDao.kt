@@ -15,7 +15,7 @@ interface CartDao {
     @Query("Select * from Cart")
     fun getAllCart(): LiveData<List<Cart>>
 
-    @Query("Select SUM(priceMenu) FROM cart")
+    @Query("Select SUM(priceMenu * quantityMenu) FROM cart")
     fun getTotalPayment() : LiveData<Double>
 
     @Query("DELETE FROM cart")

@@ -2,7 +2,6 @@ package com.am.amfood.database
 
 import androidx.lifecycle.LiveData
 import com.am.amfood.model.Cart
-import java.text.FieldPosition
 
 class CartRepository(private val dao: CartDao) {
     fun getAllCart(): LiveData<List<Cart>> {

@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.am.amfood.R
 import com.am.amfood.databinding.FragmentDetailBinding
 import com.am.amfood.model.Cart
 import com.am.amfood.model.Product
@@ -19,8 +18,8 @@ import com.am.amfood.utils.Utils.DETAIL_TO_HOME
 import com.am.amfood.utils.Utils.formatCurrency
 import com.am.amfood.utils.Utils.navigateToDestination
 import com.am.amfood.utils.Utils.navigateToMaps
+import com.am.amfood.utils.Utils.setUpBottomNavigation
 import com.am.amfood.utils.Utils.toastMessage
-import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class DetailFragment : Fragment() {
     private var _binding: FragmentDetailBinding? = null
@@ -39,23 +38,13 @@ class DetailFragment : Fragment() {
 
         (activity as AppCompatActivity).supportActionBar?.hide()
 
-        setUpGoneOrVisibleBottomNav(true)
+        setUpBottomNavigation(activity, true)
         setUpViewDetail()
         countQuantityOrder()
         order()
 
 
         return view
-    }
-
-    private fun setUpGoneOrVisibleBottomNav(isGone: Boolean) {
-        if (isGone) {
-            val bottom = activity?.findViewById<BottomNavigationView>(R.id.bottomNavigation)
-            bottom?.visibility = View.GONE
-        } else {
-            val bottom = activity?.findViewById<BottomNavigationView>(R.id.bottomNavigation)
-            bottom?.visibility = View.VISIBLE
-        }
     }
 
     private fun setUpViewDetail() {
@@ -140,6 +129,6 @@ class DetailFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-        setUpGoneOrVisibleBottomNav(false)
+        setUpBottomNavigation(activity, false)
     }
 }
