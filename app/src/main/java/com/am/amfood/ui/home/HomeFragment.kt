@@ -11,6 +11,7 @@ import com.am.amfood.R
 import com.am.amfood.databinding.FragmentHomeBinding
 import com.am.amfood.utils.Utils
 import com.am.amfood.utils.Utils.HOME_TO_PROFILE
+import com.am.amfood.utils.Utils.setUpBottomNavigation
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class HomeFragment : Fragment() {
@@ -24,10 +25,8 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val bottom = activity?.findViewById<BottomNavigationView>(R.id.bottomNavigation)
-        bottom?.visibility = View.VISIBLE
 
-
+        setUpBottomNavigation(activity, false)
         setUpLayoutManager()
         changeLayout()
         navigateToProfile()

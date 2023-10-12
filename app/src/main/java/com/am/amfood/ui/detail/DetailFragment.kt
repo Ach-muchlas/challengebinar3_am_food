@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.am.amfood.databinding.FragmentDetailBinding
-import com.am.amfood.data.remote.model.Cart
+import com.am.amfood.data.lokal.entity.Cart
 import com.am.amfood.data.remote.model.Product
 import com.am.amfood.ui.cart.CartViewModel
 import com.am.amfood.utils.Utils.DETAIL_TO_CART

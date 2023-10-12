@@ -1,10 +1,10 @@
-package com.am.amfood.data.lokal
+package com.am.amfood.data.lokal.room
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.am.amfood.data.remote.model.Cart
+import com.am.amfood.data.lokal.entity.Cart
 
 @Database(entities = [Cart::class], version = 5)
 abstract class CartDatabase : RoomDatabase() {

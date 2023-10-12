@@ -1,8 +1,8 @@
 package com.am.amfood.data
 
 import androidx.lifecycle.LiveData
-import com.am.amfood.data.lokal.CartDao
-import com.am.amfood.data.remote.model.Cart
+import com.am.amfood.data.lokal.room.CartDao
+import com.am.amfood.data.lokal.entity.Cart
 
 class CartRepository(private val dao: CartDao) {
     fun getAllCart(): LiveData<List<Cart>> {

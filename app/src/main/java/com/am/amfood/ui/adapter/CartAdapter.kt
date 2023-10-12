@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.am.amfood.databinding.ItemCartBinding
-import com.am.amfood.data.remote.model.Cart
+import com.am.amfood.data.lokal.entity.Cart
 import com.am.amfood.utils.Utils.formatCurrency
 
 class CartAdapter(

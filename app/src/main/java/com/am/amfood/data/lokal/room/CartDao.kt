@@ -1,4 +1,4 @@
-package com.am.amfood.data.lokal
+package com.am.amfood.data.lokal.room
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
@@ -7,7 +7,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.am.amfood.data.remote.model.Cart
+import com.am.amfood.data.lokal.entity.Cart
 
 @Dao
 interface CartDao {
