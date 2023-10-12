@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.am.amfood.adapter.CartAdapter
+import com.am.amfood.ui.adapter.CartAdapter
 import com.am.amfood.databinding.FragmentCartBinding
 import com.am.amfood.utils.Utils.CART_TO_CHECKOUT
 import com.am.amfood.utils.Utils.formatCurrency

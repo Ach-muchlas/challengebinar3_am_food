@@ -3,7 +3,7 @@ package com.am.amfood.ui.detail
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.am.amfood.model.Product
+import com.am.amfood.data.remote.model.Product
 
 class DetailViewModel : ViewModel() {
     private val _card = MutableLiveData<Product>()

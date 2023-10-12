@@ -1,11 +1,11 @@
-package com.am.amfood.adapter
+package com.am.amfood.ui.adapter
 
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.am.amfood.databinding.ItemCartBinding
-import com.am.amfood.model.Cart
+import com.am.amfood.data.remote.model.Cart
 import com.am.amfood.utils.Utils.formatCurrency
 
 class CartAdapter(

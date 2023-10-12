@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.am.amfood.R
-import com.am.amfood.adapter.CartAdapter
+import com.am.amfood.ui.adapter.CartAdapter
 import com.am.amfood.databinding.FragmentCheckOutBinding
 import com.am.amfood.ui.cart.CartViewModel
 import com.am.amfood.utils.Utils.CHECKOUT_TO_CART

@@ -1,4 +1,4 @@
-package com.am.amfood.adapter
+package com.am.amfood.ui.adapter
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.am.amfood.databinding.ContainerItemGridBinding
 import com.am.amfood.databinding.ContainerItemLinearBinding
-import com.am.amfood.model.Product
+import com.am.amfood.data.remote.model.Product
 import com.am.amfood.ui.home.HomeFragmentDirections
 import com.am.amfood.utils.Utils.formatCurrency
 

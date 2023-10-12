@@ -1,4 +1,4 @@
-package com.am.amfood.model
+package com.am.amfood.data.remote.model
 import android.os.Parcelable
 import com.am.amfood.R
 import kotlinx.parcelize.Parcelize

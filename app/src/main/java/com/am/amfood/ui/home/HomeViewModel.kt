@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.am.amfood.R
-import com.am.amfood.adapter.MenuAdapter
-import com.am.amfood.model.dummyDataCard
+import com.am.amfood.ui.adapter.MenuAdapter
+import com.am.amfood.data.remote.model.dummyDataCard
 
 class HomeViewModel(application: Application) : AndroidViewModel(application) {
 

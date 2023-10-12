@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.am.amfood.model.Cart
+import com.am.amfood.data.remote.model.Cart
 
 @Database(entities = [Cart::class], version = 5)
 abstract class CartDatabase : RoomDatabase() {

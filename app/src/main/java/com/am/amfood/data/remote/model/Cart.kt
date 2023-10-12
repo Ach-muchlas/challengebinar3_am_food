@@ -1,4 +1,4 @@
-package com.am.amfood.model
+package com.am.amfood.data.remote.model
 import android.widget.ImageView
 import androidx.room.Entity
 
