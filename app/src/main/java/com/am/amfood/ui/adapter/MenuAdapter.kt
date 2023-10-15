@@ -1,40 +1,33 @@
 package com.am.amfood.ui.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.am.amfood.databinding.ContainerItemGridBinding
 import com.am.amfood.databinding.ContainerItemLinearBinding
-import com.am.amfood.data.remote.model.Product
+import com.am.amfood.data.remote.response.DataItem
 import com.am.amfood.ui.home.HomeFragmentDirections
-import com.am.amfood.utils.Utils.formatCurrency
 
 class MenuAdapter(
-    private val data: ArrayList<Product>,
+    private val data: List<DataItem>,
     private val isGrid: Boolean
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     inner class MenuLinearViewHolder(private var binding: ContainerItemLinearBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bindContentLinear(cardModel: Product) {
-            binding.imageProductLinear.setImageResource(cardModel.photo)
-            binding.tvNameProductLinear.text = cardModel.name
-            binding.tvRateProductLinear.text = cardModel.rate.toString()
-            binding.tvPriceProductLinear.text = formatCurrency(cardModel.price)
+        fun bindContentLinear(cardModel: DataItem) {
+            binding.tvNameProductLinear.text = cardModel.nama
+            binding.tvPriceProductLinear.text = cardModel.hargaFormat
         }
     }
 
     inner class MenuGridViewHolder(private var binding: ContainerItemGridBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
-        fun bindContentGrid(cardModel: Product) {
-            binding.imageViewItem.setImageResource(cardModel.photo)
-            binding.textViewNameItem.text = cardModel.name
-            binding.textViewRating.text = cardModel.rate.toString()
-            binding.textViewPrice.text = formatCurrency(cardModel.price)
+        fun bindContentGrid(cardModel: DataItem) {
+            binding.textViewNameItem.text = cardModel.nama
+            binding.textViewPrice.text = cardModel.hargaFormat
         }
     }
 

@@ -1,6 +1,8 @@
 package com.am.amfood.data.remote.response
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
 data class MenuResponse(
 
@@ -17,23 +19,24 @@ data class MenuResponse(
 	val status: Boolean? = null
 )
 
+@Parcelize
 data class DataItem(
 
 	@field:SerializedName("harga_format")
-	val hargaFormat: String? = null,
+	val hargaFormat: String,
 
 	@field:SerializedName("nama")
-	val nama: String? = null,
+	val nama: String,
 
 	@field:SerializedName("harga")
-	val harga: Int? = null,
+	val harga: Int,
 
 	@field:SerializedName("image_url")
-	val imageUrl: String? = null,
+	val imageUrl: String,
 
 	@field:SerializedName("detail")
-	val detail: String? = null,
+	val detail: String,
 
 	@field:SerializedName("alamat_resto")
-	val alamatResto: String? = null
-)
+	val alamatResto: String
+): Parcelable

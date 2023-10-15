@@ -7,12 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.am.amfood.R
 import com.am.amfood.databinding.FragmentHomeBinding
 import com.am.amfood.utils.Utils
 import com.am.amfood.utils.Utils.HOME_TO_PROFILE
 import com.am.amfood.utils.Utils.setUpBottomNavigation
-import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
@@ -36,7 +34,9 @@ class HomeFragment : Fragment() {
 
     private fun setUpLayoutManager() {
         viewModel.isGrid.observe(viewLifecycleOwner) { isGrid ->
-            viewModel.setUpLayoutManager(requireContext(), binding.rvCardItem, isGrid)
+            viewModel.allMenu.observe(viewLifecycleOwner) { menu ->
+                viewModel.setUpLayoutManager(requireContext(), binding.rvCardItem, isGrid, menu)
+            }
             viewModel.setUpChangeIcon(binding.iconGridOrList, isGrid)
         }
     }
@@ -52,4 +52,5 @@ class HomeFragment : Fragment() {
             util.navigateToDestination(HOME_TO_PROFILE, findNavController())
         }
     }
+
 }
