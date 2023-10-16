@@ -4,16 +4,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.am.amfood.data.remote.model.Product
+import com.am.amfood.data.remote.response.DataItem
 
 class DetailViewModel : ViewModel() {
-    private val _card = MutableLiveData<Product>()
-    val card: LiveData<Product> = _card
+    private val _menu = MutableLiveData<DataItem>()
+    val menu: LiveData<DataItem> = _menu
 
     private val _counter: MutableLiveData<Int> = MutableLiveData(0)
     val counter: LiveData<Int> = _counter
 
-    fun setValueProduct(cardModel: Product) {
-        _card.value = cardModel
+    fun setValueProduct(cardModel: DataItem) {
+        _menu.value = cardModel
     }
 
     fun incrementCountQuantity() {

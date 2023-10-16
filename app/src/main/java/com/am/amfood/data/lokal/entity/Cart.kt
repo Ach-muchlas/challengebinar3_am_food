@@ -7,7 +7,7 @@ data class Cart(
     val id: Int? = null,
     var quantityMenu: Int,
     val nameMenu: String,
-    val photoMenu : Int,
+    val photoMenu : String,
     var priceMenu : Double,
     var totalAmount : Double = 0.0,
     var note : String? = null

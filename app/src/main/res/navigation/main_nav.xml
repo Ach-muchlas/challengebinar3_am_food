@@ -83,6 +83,11 @@
             android:id="@+id/action_checkOutFragment_to_navigation_home"
             app:destination="@id/navigation_home" />
     </fragment>
+    <activity
+        android:id="@+id/loginActivity"
+        android:name="com.am.amfood.ui.auth.LoginActivity"
+        android:label="activity_login"
+        tools:layout="@layout/activity_login" />
 
 
 </navigation>

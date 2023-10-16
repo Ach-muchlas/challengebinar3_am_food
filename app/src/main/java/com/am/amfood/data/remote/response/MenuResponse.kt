@@ -6,9 +6,6 @@ import kotlinx.parcelize.Parcelize
 
 data class MenuResponse(
 
-	@field:SerializedName("code")
-	val code: Int? = null,
-
 	@field:SerializedName("data")
 	val data: List<DataItem?>? = null,
 
@@ -22,8 +19,8 @@ data class MenuResponse(
 @Parcelize
 data class DataItem(
 
-	@field:SerializedName("harga_format")
-	val hargaFormat: String,
+	@field:SerializedName("hargaFormat")
+	val hargaFormat: String? = null,
 
 	@field:SerializedName("nama")
 	val nama: String,
@@ -31,12 +28,12 @@ data class DataItem(
 	@field:SerializedName("harga")
 	val harga: Int,
 
-	@field:SerializedName("image_url")
+	@field:SerializedName("imageUrl")
 	val imageUrl: String,
 
 	@field:SerializedName("detail")
-	val detail: String,
+	val detail: String? = null,
 
-	@field:SerializedName("alamat_resto")
-	val alamatResto: String
+	@field:SerializedName("alamatResto")
+	val alamatResto: String? = null
 ): Parcelable

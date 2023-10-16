@@ -4,9 +4,10 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.am.amfood.databinding.ItemCartBinding
 import com.am.amfood.data.lokal.entity.Cart
+import com.am.amfood.databinding.ItemCartBinding
 import com.am.amfood.utils.Utils.formatCurrency
+import com.bumptech.glide.Glide
 
 class CartAdapter(
     private val data: List<Cart>,
@@ -38,7 +39,7 @@ class CartAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bindContent(cart: Cart) {
-            binding.imageProduct.setImageResource(cart.photoMenu)
+            Glide.with(binding.root.context).load(cart.photoMenu).into(binding.imageProduct)
             binding.textNameProduct.text = cart.nameMenu
             binding.textPriceProduct.text = formatCurrency(cart.totalAmount)
             binding.textViewQuantity.text = cart.quantityMenu.toString()

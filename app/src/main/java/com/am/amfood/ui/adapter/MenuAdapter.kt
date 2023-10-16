@@ -1,5 +1,6 @@
 package com.am.amfood.ui.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.findNavController
@@ -8,6 +9,7 @@ import com.am.amfood.databinding.ContainerItemGridBinding
 import com.am.amfood.databinding.ContainerItemLinearBinding
 import com.am.amfood.data.remote.response.DataItem
 import com.am.amfood.ui.home.HomeFragmentDirections
+import com.bumptech.glide.Glide
 
 class MenuAdapter(
     private val data: List<DataItem>,
@@ -17,17 +19,20 @@ class MenuAdapter(
 
     inner class MenuLinearViewHolder(private var binding: ContainerItemLinearBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bindContentLinear(cardModel: DataItem) {
-            binding.tvNameProductLinear.text = cardModel.nama
-            binding.tvPriceProductLinear.text = cardModel.hargaFormat
+        fun bindContentLinear(menu: DataItem) {
+            Glide.with(binding.root.context).load(menu.imageUrl).into(binding.imageProductLinear)
+            Log.e("COK", menu.imageUrl.toString())
+            binding.tvNameProductLinear.text = menu.nama
+            binding.tvPriceProductLinear.text = menu.hargaFormat
         }
     }
 
     inner class MenuGridViewHolder(private var binding: ContainerItemGridBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bindContentGrid(cardModel: DataItem) {
-            binding.textViewNameItem.text = cardModel.nama
-            binding.textViewPrice.text = cardModel.hargaFormat
+        fun bindContentGrid(menu: DataItem) {
+            Glide.with(binding.root.context).load(menu.imageUrl).into(binding.imageViewItem)
+            binding.textViewNameItem.text = menu.nama
+            binding.textViewPrice.text = menu.hargaFormat
         }
     }
 

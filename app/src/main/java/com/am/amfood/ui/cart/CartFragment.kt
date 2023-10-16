@@ -64,7 +64,7 @@ class CartFragment : Fragment() {
             }
 
             viewModel.getTotalPayment().observe(viewLifecycleOwner) { total ->
-                binding.layoutCheckOut.textViewTotalPrice.text = formatCurrency(total)
+                binding.layoutCheckOut.textViewContentValueTotalPrice.text = formatCurrency(total)
             }
 
         }

@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.am.amfood.data.lokal.entity.Cart
 
-@Database(entities = [Cart::class], version = 5)
+@Database(entities = [Cart::class], version = 6)
 abstract class CartDatabase : RoomDatabase() {
     abstract fun cartDao(): CartDao
 
