@@ -52,15 +52,16 @@ class CartViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun addCart(cart: Cart) {
+    fun addCartToUpdate(cart: Cart){
         viewModelScope.launch {
             try {
-                repository.insertCart(cart)
-                _messageToast.value = "Data Saved"
-            } catch (exc: Exception) {
-                _messageToast.value = "Gagal Saved : $exc"
+                repository.addCartToUpdate(cart)
+                _messageToast.value = "Data Saved Successfully"
+            }catch (e : Exception){
+                _messageToast.value = "Data Failed to Save : $e"
             }
         }
+
     }
 
     fun getAllCart(): LiveData<List<Cart>> = repository.getAllCart()

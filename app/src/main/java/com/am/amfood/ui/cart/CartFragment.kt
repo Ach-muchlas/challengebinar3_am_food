@@ -74,5 +74,4 @@ class CartFragment : Fragment() {
         super.onDestroy()
         _binding = null
     }
-
 }

@@ -63,7 +63,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         recyclerView.adapter = MenuAdapter(menu, isGrid)
     }
 
-    fun getAllMenu() {
+    private fun getAllMenu() {
         val client = ApiConfig.getApiService().getALlMenu()
 
         client.enqueue(object : Callback<MenuResponse> {

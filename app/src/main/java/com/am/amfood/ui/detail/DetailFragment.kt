@@ -96,7 +96,6 @@ class DetailFragment : Fragment() {
     private fun addOrder() {
         val menu: DataItem = args.objectParcelable
         val photo = menu.imageUrl
-
         val name = menu.nama
         val quantity = binding.textViewQuantity.text.toString()
         val price = menu.harga
@@ -116,7 +115,7 @@ class DetailFragment : Fragment() {
             totalAmount = totalAmount.toDouble(),
         )
 
-        cartViewModel.addCart(data)
+        cartViewModel.addCartToUpdate(data)
 
         cartViewModel.messageToast.observe(viewLifecycleOwner) { message ->
             if (message.isNotEmpty()) {

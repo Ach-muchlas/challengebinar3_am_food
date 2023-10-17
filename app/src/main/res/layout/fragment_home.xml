@@ -180,7 +180,7 @@
 
             <include
                 android:id="@+id/cardCategory"
-                layout="@layout/card_category"
+                layout="@layout/category_menu"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
