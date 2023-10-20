@@ -85,9 +85,9 @@
     </fragment>
     <activity
         android:id="@+id/loginActivity"
-        android:name="com.am.amfood.ui.auth.LoginActivity"
+        android:name="com.am.amfood.ui.auth.AuthActivity"
         android:label="activity_login"
-        tools:layout="@layout/activity_login" />
+        tools:layout="@layout/activity_auth" />
 
 
 </navigation>

@@ -72,6 +72,14 @@
     <string name="ambil_sendiri">Ambil Sendiri</string>
     <string name="send">Dikirim</string>
     <string name="konfirmasi_pesanan">Konfirmasi Pesanan</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="loginlogo">loginLogo</string>
+    <string name="password">Password</string>
+    <string name="need_an_account">Need an account?</string>
+    <string name="sign_up">SIGN UP</string>
+    <string name="phone">No. Telepon</string>
+    <string name="regis">Register</string>
 
 
 </resources>

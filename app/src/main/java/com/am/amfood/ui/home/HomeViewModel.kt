@@ -7,14 +7,18 @@ import android.widget.ImageView
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.liveData
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.am.amfood.R
 import com.am.amfood.data.remote.response.DataItem
+import com.am.amfood.data.remote.response.DataItemCategory
 import com.am.amfood.data.remote.response.MenuResponse
 import com.am.amfood.data.remote.retrofit.ApiConfig
+import com.am.amfood.data.source.Result
 import com.am.amfood.ui.adapter.MenuAdapter
+import kotlinx.coroutines.Dispatchers
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -69,7 +73,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         client.enqueue(object : Callback<MenuResponse> {
             override fun onResponse(call: Call<MenuResponse>, response: Response<MenuResponse>) {
                 if (response.isSuccessful) {
-                    _allMenu.value = response.body()?.data as List<DataItem>
+                    _allMenu.value = response.body()?.data
                 } else {
                     Log.e(TAG, "onFailure : ${response.message()}")
                 }
@@ -80,6 +84,20 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
             }
 
         })
+    }
+
+    fun getCategoryMenu(): LiveData<Result<List<DataItemCategory>>> = liveData(Dispatchers.IO) {
+        try {
+            val response = ApiConfig.getApiService().getCategoryMenu()
+            if (response.status == true) {
+                val dataItem = response.data
+                emit(Result.Success(dataItem!!))
+            } else {
+                emit(Result.Error("Request response failed with status: ${response.status}, message: $${response.message}"))
+            }
+        } catch (e: Exception) {
+            emit(Result.Error("Error response $e"))
+        }
     }
 
     companion object {

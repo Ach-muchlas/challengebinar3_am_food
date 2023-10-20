@@ -101,11 +101,6 @@ class DetailFragment : Fragment() {
         val price = menu.harga
         val totalAmount = price.times(quantity.toInt())
 
-        Log.e(
-            "SIMPLE",
-            "nama : $name || quantity : $quantity ||  price : $price || total : $totalAmount"
-        )
-
         val data = Cart(
             null,
             nameMenu = name,

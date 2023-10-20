@@ -1,5 +1,6 @@
 package com.am.amfood.utils
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -8,7 +9,13 @@ import android.view.View
 import android.widget.Toast
 import androidx.navigation.NavController
 import com.am.amfood.R
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import java.text.DecimalFormat
 
 object Utils {
@@ -18,6 +25,9 @@ object Utils {
     const val CART_TO_CHECKOUT = "cartToCheckout"
     const val HOME_TO_PROFILE = "homeToProfile"
     const val CHECKOUT_TO_HOME = "checkoutToHome"
+    @SuppressLint("StaticFieldLeak")
+    lateinit var googleSignClient : GoogleSignInClient
+    lateinit var firebaseAuth : FirebaseAuth
 
     fun formatCurrency(amount: Double): String {
         val decimal = DecimalFormat("#,###.##")
@@ -27,6 +37,7 @@ object Utils {
     fun toastMessage(context: Context, message: String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
+
 
     fun navigateToDestination(
         destination: String,
@@ -44,7 +55,6 @@ object Utils {
             }
         }
     }
-
     fun navigateToMaps(latitude: Double?, longitude: Double?, context: Context) {
         val uri = Uri.parse("http://maps.google.com/maps?q=loc:${latitude},${longitude}")
         val mapIntent = Intent(Intent.ACTION_VIEW, uri)
@@ -59,6 +69,16 @@ object Utils {
         } else {
             bottomNav?.visibility = View.VISIBLE
         }
+    }
+
+    fun firebaseConfiguration(context: Context){
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(context.getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+
+        googleSignClient = GoogleSignIn.getClient(context, gso)
+        firebaseAuth = Firebase.auth
     }
 
 }

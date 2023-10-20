@@ -178,9 +178,9 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/edtBanner" />
 
-            <include
-                android:id="@+id/cardCategory"
-                layout="@layout/category_menu"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewCategory"
+                tools:listitem="@layout/item_category_menu"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
@@ -197,7 +197,7 @@
                 android:fontFamily="@font/coco_bold"
                 android:text="@string/list_menu"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cardCategory" />
+                app:layout_constraintTop_toBottomOf="@id/recyclerViewCategory" />
 
             <ImageView
                 android:id="@+id/iconGridOrList"
@@ -209,7 +209,7 @@
                 android:src="@drawable/more"
                 android:clickable="true"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cardCategory"
+                app:layout_constraintTop_toBottomOf="@id/recyclerViewCategory"
                 android:focusable="true" />
 
             <androidx.recyclerview.widget.RecyclerView

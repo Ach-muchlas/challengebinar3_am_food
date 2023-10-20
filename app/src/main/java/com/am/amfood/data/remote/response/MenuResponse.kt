@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 data class MenuResponse(
 
 	@field:SerializedName("data")
-	val data: List<DataItem?>? = null,
+	val data: List<DataItem>,
 
 	@field:SerializedName("message")
 	val message: String? = null,

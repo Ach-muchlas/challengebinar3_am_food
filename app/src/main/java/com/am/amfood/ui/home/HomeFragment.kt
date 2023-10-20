@@ -5,33 +5,30 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.view.menu.MenuAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.am.amfood.R
-import com.am.amfood.data.remote.response.DataItem
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.am.amfood.data.remote.response.DataItemCategory
+import com.am.amfood.data.source.Result
 import com.am.amfood.databinding.FragmentHomeBinding
+import com.am.amfood.ui.adapter.CategoryAdapter
+import com.am.amfood.ui.auth.AuthActivity
 import com.am.amfood.ui.auth.AuthViewModel
-import com.am.amfood.ui.auth.LoginActivity
 import com.am.amfood.utils.Utils
 import com.am.amfood.utils.Utils.HOME_TO_PROFILE
+import com.am.amfood.utils.Utils.firebaseAuth
+import com.am.amfood.utils.Utils.firebaseConfiguration
+import com.am.amfood.utils.Utils.googleSignClient
 import com.am.amfood.utils.Utils.setUpBottomNavigation
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
+import com.am.amfood.utils.Utils.toastMessage
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var util: Utils
     private val viewModel: HomeViewModel by viewModels()
-    private val authViewModel : AuthViewModel by viewModels()
-    private lateinit var googleSignClient: GoogleSignInClient
-    private lateinit var firebaseAuth: FirebaseAuth
+    private val autViewModel : AuthViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -39,29 +36,47 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         setUpBottomNavigation(activity, false)
-        setUpLayoutManager()
+        setUpDisplayCategoryMenu()
+        setUpDisplayMenu()
         changeLayout()
         navigateToProfile()
-        setUpFirebase()
+        firebaseConfiguration(requireContext())
+        binding.cardShop.setOnClickListener {
+            autViewModel.signOut(firebaseAuth, googleSignClient)
+            startActivity(Intent(requireContext(), AuthActivity::class.java))
+        }
 
         return binding.root
     }
-    private fun setUpFirebase() {
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
 
-        googleSignClient = GoogleSignIn.getClient(requireActivity(), gso)
-        firebaseAuth = Firebase.auth
+    private fun setUpDisplayCategoryMenu() {
+        viewModel.getCategoryMenu().observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is Result.Success -> {
+                    setUpDataCategory(result.data)
+                }
 
-        /*Untuk LogOut*/
-        /*binding.cardShop.setOnClickListener {
-            authViewModel.signOut(firebaseAuth, googleSignClient)
-            startActivity(Intent(requireContext(), LoginActivity::class.java))
-        }*/
+                is Result.Error -> {
+                    toastMessage(requireContext(), result.error)
+                }
+
+                else -> {
+                    toastMessage(requireContext(), "Unknown Response")
+                }
+
+            }
+        }
     }
-    private fun setUpLayoutManager() {
+
+    private fun setUpDataCategory(data: List<DataItemCategory>) {
+        val adapter = CategoryAdapter()
+        adapter.submitList(data)
+        binding.recyclerViewCategory.adapter = adapter
+        binding.recyclerViewCategory.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+    }
+
+    private fun setUpDisplayMenu() {
         viewModel.isGrid.observe(viewLifecycleOwner) { isGrid ->
             viewModel.allMenu.observe(viewLifecycleOwner) { menu ->
                 viewModel.setUpLayoutManager(requireContext(), binding.rvCardItem, isGrid, menu)
@@ -81,5 +96,4 @@ class HomeFragment : Fragment() {
             util.navigateToDestination(HOME_TO_PROFILE, findNavController())
         }
     }
-
 }

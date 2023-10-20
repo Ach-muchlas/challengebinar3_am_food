@@ -2,13 +2,12 @@ package com.am.amfood.ui.main
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.am.amfood.R
 import com.am.amfood.databinding.ActivityMainBinding
-import com.am.amfood.ui.auth.LoginActivity
+import com.am.amfood.ui.auth.AuthActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -33,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         val firebaseUser = firebaseAuth.currentUser
 
         if (firebaseUser == null){
-            startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+            startActivity(Intent(this@MainActivity, AuthActivity::class.java))
             finish()
             return
         }

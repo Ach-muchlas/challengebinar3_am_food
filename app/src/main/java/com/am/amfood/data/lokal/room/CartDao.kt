@@ -21,7 +21,9 @@ interface CartDao {
         val existingCart = getOrderById(cart.nameMenu)
         if (existingCart != null){
             val newQuantity = existingCart.quantityMenu + cart.quantityMenu
+            val newTotalAmount = existingCart.totalAmount + cart.totalAmount
             existingCart.quantityMenu = newQuantity
+            existingCart.totalAmount = newTotalAmount
             update(existingCart)
         }else{
             insert(cart)

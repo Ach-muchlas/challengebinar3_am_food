@@ -1,6 +1,7 @@
 package com.am.amfood.ui.cart
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import com.am.amfood.utils.Utils.CART_TO_CHECKOUT
 import com.am.amfood.utils.Utils.formatCurrency
 import com.am.amfood.utils.Utils.navigateToDestination
 import com.am.amfood.utils.Utils.setUpBottomNavigation
+import com.am.amfood.utils.Utils.toastMessage
 
 class CartFragment : Fragment() {
     private var _binding: FragmentCartBinding? = null
@@ -35,8 +37,14 @@ class CartFragment : Fragment() {
 
     private fun orderItem() {
         binding.layoutCheckOut.btnContentPesan.setOnClickListener {
-            navigateToDestination(CART_TO_CHECKOUT, findNavController())
+            val cartValue = viewModel.getAllCart().value
+            if (cartValue.isNullOrEmpty()){
+                toastMessage(requireContext(), "Data Kosong")
+            }else{
+                navigateToDestination(CART_TO_CHECKOUT, findNavController())
+            }
         }
+
     }
 
     private fun setUpCart() {
@@ -44,7 +52,6 @@ class CartFragment : Fragment() {
             val adapter = CartAdapter(list)
             binding.rvCart.layoutManager = LinearLayoutManager(requireContext())
             binding.rvCart.adapter = adapter
-
 
             adapter.setOnDeleteClickListener { cartItem ->
                 viewModel.deleteItem(cartItem)
@@ -60,13 +67,12 @@ class CartFragment : Fragment() {
 
             }
             adapter.setAddNote { note ->
-                viewModel.updateCart(note)
+                viewModel.addCartToUpdate(note)
             }
 
             viewModel.getTotalPayment().observe(viewLifecycleOwner) { total ->
                 binding.layoutCheckOut.textViewContentValueTotalPrice.text = formatCurrency(total)
             }
-
         }
     }
 

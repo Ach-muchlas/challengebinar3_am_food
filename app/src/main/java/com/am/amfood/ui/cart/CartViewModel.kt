@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.am.amfood.data.lokal.room.CartDatabase
-import com.am.amfood.data.CartRepository
+import com.am.amfood.data.source.CartRepository
 import com.am.amfood.data.lokal.entity.Cart
 import kotlinx.coroutines.launch
 
@@ -26,7 +26,7 @@ class CartViewModel(application: Application) : AndroidViewModel(application) {
         return repository.getTotalPayment()
     }
 
-    fun updateCart(cart: Cart) {
+    private fun updateCart(cart: Cart) {
         viewModelScope.launch {
             try {
                 repository.updateCart(cart)
@@ -61,7 +61,6 @@ class CartViewModel(application: Application) : AndroidViewModel(application) {
                 _messageToast.value = "Data Failed to Save : $e"
             }
         }
-
     }
 
     fun getAllCart(): LiveData<List<Cart>> = repository.getAllCart()

@@ -7,48 +7,68 @@ import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
+import androidx.viewpager2.widget.ViewPager2
 import com.am.amfood.R
-import com.am.amfood.databinding.ActivityLoginBinding
+import com.am.amfood.databinding.ActivityAuthBinding
+import com.am.amfood.ui.adapter.ViewPagerAdapter
 import com.am.amfood.ui.main.MainActivity
+import com.am.amfood.utils.Utils.firebaseAuth
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.firebase.auth.FirebaseAuth
+import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 
-class LoginActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityLoginBinding
-    private lateinit var googleSignClient: GoogleSignInClient
-    private lateinit var firebaseAuth: FirebaseAuth
+class AuthActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityAuthBinding
     private val viewModel: AuthViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLoginBinding.inflate(layoutInflater)
+        binding = ActivityAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setUpDisplay()
 
         setUpFirebase()
     }
 
-    private fun setUpFirebase() {
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
+    private fun setUpDisplay() {
 
-        googleSignClient = GoogleSignIn.getClient(this, gso)
-        firebaseAuth = Firebase.auth
+        val fragmentManager: FragmentManager = supportFragmentManager
+        val adapter = ViewPagerAdapter(fragmentManager, lifecycle)
+        binding.viewPager.adapter = adapter
 
-        binding.btnSignIn.setOnClickListener {
-            viewModel.signIn(googleSignClient, resultLauncher)
+        binding.apply {
+            tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.login)))
+            tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.regis)))
+
+            tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                override fun onTabSelected(tab: TabLayout.Tab) {
+                    viewPager.setCurrentItem(tab.position, true)
+                }
+
+                override fun onTabUnselected(tab: TabLayout.Tab?) {}
+
+                override fun onTabReselected(tab: TabLayout.Tab?) {}
+            })
+
+            viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    tabLayout.selectTab(tabLayout.getTabAt(position))
+                }
+            })
         }
+
     }
 
-    var resultLauncher =
+    private fun setUpFirebase() {
+//        binding.btnSignIn.setOnClickListener {
+//            viewModel.signIn(googleSignClient, resultLauncher)
+//        }
+    }
+
+    private var resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
@@ -80,7 +100,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun updateUI(currentUser: FirebaseUser?) {
         if (currentUser != null) {
-            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+            startActivity(Intent(this@AuthActivity, MainActivity::class.java))
             finish()
         }
     }

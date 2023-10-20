@@ -6,11 +6,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.am.amfood.data.remote.response.DataItemCategory
-import com.am.amfood.databinding.CategoryMenuBinding
+import com.am.amfood.databinding.ItemCategoryMenuBinding
 import com.bumptech.glide.Glide
 
 class CategoryAdapter : ListAdapter<DataItemCategory, CategoryAdapter.MyViewHolder>(DIFF_CALLBACK) {
-    inner class MyViewHolder(private val binding: CategoryMenuBinding) :
+    inner class MyViewHolder(private val binding: ItemCategoryMenuBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(menu: DataItemCategory) {
             binding.textViewNameItem.text = menu.nama
@@ -21,7 +21,7 @@ class CategoryAdapter : ListAdapter<DataItemCategory, CategoryAdapter.MyViewHold
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding =
-            CategoryMenuBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemCategoryMenuBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MyViewHolder(binding)
     }
 
