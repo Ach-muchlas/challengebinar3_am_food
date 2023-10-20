@@ -80,6 +80,9 @@
     <string name="sign_up">SIGN UP</string>
     <string name="phone">No. Telepon</string>
     <string name="regis">Register</string>
+    <string name="username">Username</string>
+    <string name="iconlogout">IconLogOut</string>
+    <string name="logout">LOGOUT</string>
 
 
 </resources>

@@ -10,16 +10,20 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.am.amfood.data.remote.firebase.DataUser
 import com.am.amfood.databinding.FragmentLoginBinding
 import com.am.amfood.ui.auth.AuthActivity
 import com.am.amfood.ui.auth.AuthViewModel
 import com.am.amfood.ui.main.MainActivity
+import com.am.amfood.ui.profile.ProfileFragment
 import com.am.amfood.utils.Utils.firebaseAuth
 import com.am.amfood.utils.Utils.googleSignClient
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
@@ -83,6 +87,14 @@ class LoginFragment : Fragment() {
                 if (task.isSuccessful) {
                     Log.d(AuthActivity.TAG, "SignInWithCredentialSuccess")
                     val user = firebaseAuth.currentUser
+                    val userData = DataUser(user?.email, user?.phoneNumber)
+
+                    /*save object data to firebase*/
+                    val database = Firebase.database
+                    val ref = database.reference.child(ProfileFragment.USERS)
+
+                    /*store user data with uid*/
+                    ref.child(user!!.uid).setValue(userData)
                     updateUI(user)
                 } else {
                     Log.w(AuthActivity.TAG, "signInWithCredentialFailure ", task.exception)

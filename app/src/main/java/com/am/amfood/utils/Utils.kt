@@ -4,9 +4,9 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import com.am.amfood.R
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import java.text.DecimalFormat
+import java.util.Locale
 
 object Utils {
     const val DETAIL_TO_HOME = "detailToHome"
@@ -25,14 +26,18 @@ object Utils {
     const val CART_TO_CHECKOUT = "cartToCheckout"
     const val HOME_TO_PROFILE = "homeToProfile"
     const val CHECKOUT_TO_HOME = "checkoutToHome"
+
     @SuppressLint("StaticFieldLeak")
-    lateinit var googleSignClient : GoogleSignInClient
-    lateinit var firebaseAuth : FirebaseAuth
+    lateinit var googleSignClient: GoogleSignInClient
+    lateinit var firebaseAuth: FirebaseAuth
 
     fun formatCurrency(amount: Double): String {
         val decimal = DecimalFormat("#,###.##")
         return "Rp. " + decimal.format(amount)
     }
+
+    fun formatNameFromEmail(name: String): String =
+        name.substringBefore("@")
 
     fun toastMessage(context: Context, message: String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
@@ -55,12 +60,6 @@ object Utils {
             }
         }
     }
-    fun navigateToMaps(latitude: Double?, longitude: Double?, context: Context) {
-        val uri = Uri.parse("http://maps.google.com/maps?q=loc:${latitude},${longitude}")
-        val mapIntent = Intent(Intent.ACTION_VIEW, uri)
-        mapIntent.setPackage("com.google.android.apps.maps")
-        context.startActivity(mapIntent)
-    }
 
     fun setUpBottomNavigation(activity: Activity?, isGone: Boolean) {
         val bottomNav = activity?.findViewById<BottomNavigationView>(R.id.bottomNavigation)
@@ -71,7 +70,7 @@ object Utils {
         }
     }
 
-    fun firebaseConfiguration(context: Context){
+    fun firebaseConfiguration(context: Context) {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(context.getString(R.string.default_web_client_id))
             .requestEmail()
@@ -81,4 +80,12 @@ object Utils {
         firebaseAuth = Firebase.auth
     }
 
+    fun intentActivityUseFinish(context: Context, targetActivity: Class<*>) {
+        val intent = Intent(context, targetActivity)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+        context.startActivity(intent)
+        if (context is AppCompatActivity) {
+            context.finish()
+        }
+    }
 }
