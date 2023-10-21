@@ -1,7 +1,7 @@
 package com.am.amfood.ui.checkout
 
+import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,10 +18,12 @@ import com.am.amfood.ui.cart.CartViewModel
 import com.am.amfood.utils.Utils
 import com.am.amfood.utils.Utils.CHECKOUT_TO_CART
 import com.am.amfood.utils.Utils.CHECKOUT_TO_HOME
-import com.am.amfood.utils.Utils.firebaseAuth
 import com.am.amfood.utils.Utils.navigateToDestination
 import com.am.amfood.utils.Utils.setUpBottomNavigation
 import com.am.amfood.utils.Utils.toastMessage
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -31,6 +33,8 @@ class CheckOutFragment : Fragment() {
     private lateinit var binding: FragmentCheckOutBinding
     private val viewModel: CheckOutViewModel by viewModels()
     private val cartViewModel: CartViewModel by viewModels()
+    private lateinit var googleSignInClient: GoogleSignInClient
+    private lateinit var firebaseAuth: FirebaseAuth
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -51,7 +55,8 @@ class CheckOutFragment : Fragment() {
     }
 
     private fun setUpDisplayCart() {
-        Utils.firebaseConfiguration(requireContext())
+        firebaseConfiguration(requireContext())
+        firebaseAuth = Firebase.auth
         val username = firebaseAuth.currentUser?.displayName
 
         cartViewModel.getAllCart().observe(viewLifecycleOwner) { list ->
@@ -81,20 +86,30 @@ class CheckOutFragment : Fragment() {
         }
     }
 
+    private fun firebaseConfiguration(context: Context) {
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(context.getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+
+        googleSignInClient = GoogleSignIn.getClient(context, gso)
+        firebaseAuth = Firebase.auth
+    }
+
     private fun setUpCheckOutOrder(order: OrdersItem, total: Int, username: String) {
         viewModel.checkOutOrder(order = order, total = total, username = username)
             .observe(viewLifecycleOwner) {
                 when (it) {
                     is Result.Success -> {
-                        toastMessage(requireContext(), "berhasil")
+                        toastMessage(requireContext(), "success")
                     }
 
                     is Result.Error -> {
-                        toastMessage(requireContext(), "Gagal")
+                        toastMessage(requireContext(), "eror : ${it.error}")
                     }
 
                     else -> {
-                        toastMessage(requireContext(), "")
+                        toastMessage(requireContext(), "Invalid response!!")
                     }
                 }
 

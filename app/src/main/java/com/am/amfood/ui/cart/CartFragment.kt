@@ -1,7 +1,6 @@
 package com.am.amfood.ui.cart
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,13 +8,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.am.amfood.ui.adapter.CartAdapter
 import com.am.amfood.databinding.FragmentCartBinding
+import com.am.amfood.ui.adapter.CartAdapter
 import com.am.amfood.utils.Utils.CART_TO_CHECKOUT
 import com.am.amfood.utils.Utils.formatCurrency
 import com.am.amfood.utils.Utils.navigateToDestination
 import com.am.amfood.utils.Utils.setUpBottomNavigation
-import com.am.amfood.utils.Utils.toastMessage
 
 class CartFragment : Fragment() {
     private var _binding: FragmentCartBinding? = null
@@ -30,21 +28,16 @@ class CartFragment : Fragment() {
 
         setUpCart()
         setUpBottomNavigation(activity, false)
-        orderItem()
+//        orderItem()
 
         return binding.root
     }
 
     private fun orderItem() {
         binding.layoutCheckOut.btnContentPesan.setOnClickListener {
-            val cartValue = viewModel.getAllCart().value
-            if (cartValue.isNullOrEmpty()){
-                toastMessage(requireContext(), "Data Kosong")
-            }else{
-                navigateToDestination(CART_TO_CHECKOUT, findNavController())
-            }
-        }
 
+            navigateToDestination(CART_TO_CHECKOUT, findNavController())
+        }
     }
 
     private fun setUpCart() {
@@ -64,14 +57,21 @@ class CartFragment : Fragment() {
 
             adapter.setOnMinusClickListener { cart ->
                 viewModel.decrement(cart)
-
             }
+
             adapter.setAddNote { note ->
                 viewModel.addCartToUpdate(note)
             }
 
             viewModel.getTotalPayment().observe(viewLifecycleOwner) { total ->
                 binding.layoutCheckOut.textViewContentValueTotalPrice.text = formatCurrency(total)
+            }
+
+            if (list.isEmpty()) {
+                binding.textEmptyCart.visibility = View.VISIBLE
+            } else {
+                binding.textEmptyCart.visibility = View.GONE
+                orderItem()
             }
         }
     }

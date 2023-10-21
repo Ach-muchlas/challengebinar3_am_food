@@ -10,18 +10,21 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.am.amfood.R
 import com.am.amfood.data.remote.firebase.DataUser
 import com.am.amfood.databinding.FragmentLoginBinding
 import com.am.amfood.ui.auth.AuthActivity
 import com.am.amfood.ui.auth.AuthViewModel
 import com.am.amfood.ui.main.MainActivity
 import com.am.amfood.ui.profile.ProfileFragment
-import com.am.amfood.utils.Utils.firebaseAuth
-import com.am.amfood.utils.Utils.googleSignClient
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
@@ -29,6 +32,8 @@ class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
     private val viewModel: AuthViewModel by viewModels()
+    private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var googleSignInClient : GoogleSignInClient
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,9 +46,16 @@ class LoginFragment : Fragment() {
 
 
     private fun setUpLoginOrSigIn() {
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(requireContext().getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+
+        googleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
+
         binding.apply {
             buttonTextSigIn.setOnClickListener {
-                viewModel.signIn(googleSignClient, resultLauncher)
+                viewModel.signIn(googleSignInClient, resultLauncher)
             }
 
             btnLogin.setOnClickListener {
@@ -55,7 +67,7 @@ class LoginFragment : Fragment() {
     private fun loginUser() {
         val email = binding.edtLoginEmail.text
         val password = binding.edtLoginPassword.text
-        val firebaseAuth = firebaseAuth
+        firebaseAuth = Firebase.auth
         viewModel.login(
             firebaseAuth,
             email.toString(),
@@ -81,6 +93,7 @@ class LoginFragment : Fragment() {
 
 
     private fun firebaseAuthWithGoogle(idToken: String) {
+        firebaseAuth = Firebase.auth
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         firebaseAuth.signInWithCredential(credential)
             .addOnCompleteListener { task ->

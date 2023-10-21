@@ -8,8 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.am.amfood.databinding.FragmentRegisterBinding
 import com.am.amfood.ui.auth.AuthViewModel
-import com.am.amfood.utils.Utils.firebaseAuth
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 
@@ -17,6 +17,7 @@ class RegisterFragment : Fragment() {
     private var _binding : FragmentRegisterBinding? = null
     private val binding get() = _binding!!
     private val authViewModel : AuthViewModel by viewModels()
+    private lateinit var firebaseAuth : FirebaseAuth
 
 
     override fun onCreateView(
@@ -28,9 +29,7 @@ class RegisterFragment : Fragment() {
         val email = binding.edtRegisEmail.text
         val password = binding.edtRegisPassword.text
         val phone = binding.edtRegisPhone.text
-        val firebaseAuth = firebaseAuth
-
-
+        firebaseAuth = Firebase.auth
 
         binding.btnRegis.setOnClickListener {
             authViewModel.register(

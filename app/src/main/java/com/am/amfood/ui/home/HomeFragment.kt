@@ -1,6 +1,5 @@
 package com.am.amfood.ui.home
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,22 +12,23 @@ import com.am.amfood.data.remote.response.DataItemCategory
 import com.am.amfood.data.source.Result
 import com.am.amfood.databinding.FragmentHomeBinding
 import com.am.amfood.ui.adapter.CategoryAdapter
-import com.am.amfood.ui.auth.AuthActivity
-import com.am.amfood.ui.auth.AuthViewModel
 import com.am.amfood.utils.Utils
+import com.am.amfood.utils.Utils.HOME_TO_CART
 import com.am.amfood.utils.Utils.HOME_TO_PROFILE
-import com.am.amfood.utils.Utils.firebaseAuth
-import com.am.amfood.utils.Utils.firebaseConfiguration
-import com.am.amfood.utils.Utils.googleSignClient
+import com.am.amfood.utils.Utils.navigateToDestination
 import com.am.amfood.utils.Utils.setUpBottomNavigation
 import com.am.amfood.utils.Utils.toastMessage
+import com.bumptech.glide.Glide
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var util: Utils
     private val viewModel: HomeViewModel by viewModels()
-    private val autViewModel : AuthViewModel by viewModels()
+    private lateinit var firebaseAuth : FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -40,10 +40,8 @@ class HomeFragment : Fragment() {
         setUpDisplayMenu()
         changeLayout()
         navigateToProfile()
-        firebaseConfiguration(requireContext())
         binding.cardShop.setOnClickListener {
-            autViewModel.signOut(firebaseAuth, googleSignClient)
-            startActivity(Intent(requireContext(), AuthActivity::class.java))
+            navigateToDestination(HOME_TO_CART, findNavController())
         }
 
         return binding.root
@@ -92,6 +90,9 @@ class HomeFragment : Fragment() {
     }
 
     private fun navigateToProfile() {
+        firebaseAuth = Firebase.auth
+        val photoUrl = firebaseAuth.currentUser?.photoUrl
+        Glide.with(requireContext()).load(photoUrl).into(binding.cardProfile)
         binding.cardProfile.setOnClickListener {
             util.navigateToDestination(HOME_TO_PROFILE, findNavController())
         }

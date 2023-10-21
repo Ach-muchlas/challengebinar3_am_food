@@ -1,6 +1,5 @@
 package com.am.amfood.ui.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.findNavController
@@ -21,7 +20,6 @@ class MenuAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bindContentLinear(menu: DataItem) {
             Glide.with(binding.root.context).load(menu.imageUrl).into(binding.imageProductLinear)
-            Log.e("COK", menu.imageUrl.toString())
             binding.tvNameProductLinear.text = menu.nama
             binding.tvPriceProductLinear.text = menu.hargaFormat
         }

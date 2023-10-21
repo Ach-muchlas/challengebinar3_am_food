@@ -83,6 +83,7 @@
     <string name="username">Username</string>
     <string name="iconlogout">IconLogOut</string>
     <string name="logout">LOGOUT</string>
+    <string name="empty_data_cart">Empty data cart</string>
 
 
 </resources>

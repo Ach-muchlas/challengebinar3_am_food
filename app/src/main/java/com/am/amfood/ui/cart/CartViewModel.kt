@@ -5,15 +5,14 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.am.amfood.data.lokal.entity.Cart
 import com.am.amfood.data.lokal.room.CartDatabase
 import com.am.amfood.data.source.CartRepository
-import com.am.amfood.data.lokal.entity.Cart
 import kotlinx.coroutines.launch
 
 class CartViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: CartRepository
-
     private val _messageToast = MutableLiveData("")
     val messageToast: LiveData<String> = _messageToast
 
@@ -30,11 +29,10 @@ class CartViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             try {
                 repository.updateCart(cart)
-                _messageToast.value = "Data Saved"
+                _messageToast.value = "Data Saved Successfully"
             } catch (e: Exception) {
-                _messageToast.value = "Gagal Saved : $e"
+                _messageToast.value = "Data failed to save : ${e.message}"
             }
-
         }
     }
 
@@ -49,6 +47,9 @@ class CartViewModel(application: Application) : AndroidViewModel(application) {
             cart.quantityMenu--
             cart.totalAmount = cart.priceMenu * cart.quantityMenu
             updateCart(cart)
+            if (cart.quantityMenu == 0){
+                deleteItem(cart)
+            }
         }
     }
 
@@ -58,7 +59,7 @@ class CartViewModel(application: Application) : AndroidViewModel(application) {
                 repository.addCartToUpdate(cart)
                 _messageToast.value = "Data Saved Successfully"
             }catch (e : Exception){
-                _messageToast.value = "Data Failed to Save : $e"
+                _messageToast.value = "Data Failed to Save : ${e.message}"
             }
         }
     }
@@ -66,9 +67,7 @@ class CartViewModel(application: Application) : AndroidViewModel(application) {
     fun getAllCart(): LiveData<List<Cart>> = repository.getAllCart()
 
     fun deleteItem(cart: Cart) {
-        viewModelScope.launch {
-            repository.deleteItem(cart)
-        }
+        repository.deleteItem(cart)
     }
 
     fun deleteDataCart() {
@@ -76,5 +75,4 @@ class CartViewModel(application: Application) : AndroidViewModel(application) {
             repository.deleteAll()
         }
     }
-
 }

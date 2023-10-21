@@ -7,12 +7,10 @@ import androidx.lifecycle.ViewModel
 import com.am.amfood.data.remote.firebase.DataUser
 import com.am.amfood.ui.main.MainActivity
 import com.am.amfood.ui.profile.ProfileFragment
-import com.am.amfood.utils.Utils.firebaseAuth
 import com.am.amfood.utils.Utils.intentActivityUseFinish
 import com.am.amfood.utils.Utils.toastMessage
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 

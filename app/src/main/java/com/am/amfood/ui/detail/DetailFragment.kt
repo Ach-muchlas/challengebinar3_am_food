@@ -1,7 +1,6 @@
 package com.am.amfood.ui.detail
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,7 +39,6 @@ class DetailFragment : Fragment() {
         setUpBottomNavigation(activity, true)
         setUpViewDetail()
         countQuantityOrder()
-        order()
 
 
         return view
@@ -58,9 +56,6 @@ class DetailFragment : Fragment() {
                 textViewValuePrice.text = menuItem.hargaFormat
                 textViewValueLocation.text = menuItem.alamatResto
                 Ratingbar.rating = 5.0F
-//                iconMaps.setOnClickListener {
-//                    navigateToMaps(card.lat, card.long, requireContext())
-//                }
                 cardBack.setOnClickListener {
                     navigateToDestination(DETAIL_TO_HOME, findNavController())
                 }
@@ -71,7 +66,6 @@ class DetailFragment : Fragment() {
 
     private fun countQuantityOrder() {
         binding.apply {
-
             btnPlus.setOnClickListener {
                 viewModel.incrementCountQuantity()
             }
@@ -80,6 +74,9 @@ class DetailFragment : Fragment() {
             }
             viewModel.counter.observe(viewLifecycleOwner) { result ->
                 textViewQuantity.text = result.toString()
+                if (result > 0) {
+                    order()
+                }
             }
         }
     }

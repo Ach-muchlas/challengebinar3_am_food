@@ -16,13 +16,10 @@
         <action
             android:id="@+id/action_navigation_home_to_navigation_profile"
             app:destination="@id/navigation_profile" />
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_cart"
+            app:destination="@id/navigation_cart" />
     </fragment>
-
-    <fragment
-        android:id="@+id/navigation_like"
-        android:name="com.am.amfood.ui.like.LikeFragment"
-        android:label="@string/title_like"
-        tools:layout="@layout/fragment_like" />
 
     <fragment
         android:id="@+id/navigation_cart"
