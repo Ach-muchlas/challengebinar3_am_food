@@ -26,55 +26,55 @@ class CartFragment : Fragment() {
         _binding = FragmentCartBinding.inflate(inflater, container, false)
         binding.appbar.btnBack.visibility = View.GONE
 
-        setUpCart()
+//        setUpCart()
         setUpBottomNavigation(activity, false)
 //        orderItem()
 
         return binding.root
     }
 
-    private fun orderItem() {
-        binding.layoutCheckOut.btnContentPesan.setOnClickListener {
-
-            navigateToDestination(CART_TO_CHECKOUT, findNavController())
-        }
-    }
-
-    private fun setUpCart() {
-        viewModel.getAllCart().observe(viewLifecycleOwner) { list ->
-            val adapter = CartAdapter(list)
-            binding.rvCart.layoutManager = LinearLayoutManager(requireContext())
-            binding.rvCart.adapter = adapter
-
-            adapter.setOnDeleteClickListener { cartItem ->
-                viewModel.deleteItem(cartItem)
-            }
-
-            adapter.setOnPlusClickListener { cart ->
-                viewModel.increment(cart)
-
-            }
-
-            adapter.setOnMinusClickListener { cart ->
-                viewModel.decrement(cart)
-            }
-
-            adapter.setAddNote { note ->
-                viewModel.addCartToUpdate(note)
-            }
-
-            viewModel.getTotalPayment().observe(viewLifecycleOwner) { total ->
-                binding.layoutCheckOut.textViewContentValueTotalPrice.text = formatCurrency(total)
-            }
-
-            if (list.isEmpty()) {
-                binding.textEmptyCart.visibility = View.VISIBLE
-            } else {
-                binding.textEmptyCart.visibility = View.GONE
-                orderItem()
-            }
-        }
-    }
+//    private fun orderItem() {
+//        binding.layoutCheckOut.btnContentPesan.setOnClickListener {
+//
+//            navigateToDestination(CART_TO_CHECKOUT, findNavController())
+//        }
+//    }
+//
+//    private fun setUpCart() {
+//        viewModel.getAllCart().observe(viewLifecycleOwner) { list ->
+//            val adapter = CartAdapter(list)
+//            binding.rvCart.layoutManager = LinearLayoutManager(requireContext())
+//            binding.rvCart.adapter = adapter
+//
+//            adapter.setOnDeleteClickListener { cartItem ->
+//                viewModel.deleteItem(cartItem)
+//            }
+//
+//            adapter.setOnPlusClickListener { cart ->
+//                viewModel.increment(cart)
+//
+//            }
+//
+//            adapter.setOnMinusClickListener { cart ->
+//                viewModel.decrement(cart)
+//            }
+//
+//            adapter.setAddNote { note ->
+//                viewModel.addCartToUpdate(note)
+//            }
+//
+//            viewModel.getTotalPayment().observe(viewLifecycleOwner) { total ->
+//                binding.layoutCheckOut.textViewContentValueTotalPrice.text = formatCurrency(total)
+//            }
+//
+//            if (list.isEmpty()) {
+//                binding.textEmptyCart.visibility = View.VISIBLE
+//            } else {
+//                binding.textEmptyCart.visibility = View.GONE
+//                orderItem()
+//            }
+//        }
+//    }
 
     override fun onDestroy() {
         super.onDestroy()

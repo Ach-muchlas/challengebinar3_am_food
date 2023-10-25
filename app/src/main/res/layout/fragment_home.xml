@@ -180,13 +180,21 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewCategory"
-                tools:listitem="@layout/item_category_menu"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textViewCategory" />
+
+            <ProgressBar
+                android:id="@+id/progressBarCategoryMenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@id/recyclerViewCategory"
+                app:layout_constraintEnd_toEndOf="@id/recyclerViewCategory"
+                app:layout_constraintStart_toStartOf="@id/recyclerViewCategory"
+                app:layout_constraintTop_toTopOf="@id/recyclerViewCategory" />
 
             <TextView
                 android:id="@+id/textViewList"
@@ -213,7 +221,7 @@
                 android:focusable="true" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvCardItem"
+                android:id="@+id/recyclerViewMenu"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -222,5 +230,16 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textViewList" />
+
+            <ProgressBar
+                android:id="@+id/progressBarMenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:layout_constraintBottom_toBottomOf="@id/recyclerViewMenu"
+                app:layout_constraintEnd_toEndOf="@id/recyclerViewMenu"
+                app:layout_constraintStart_toStartOf="@id/recyclerViewMenu"
+                app:layout_constraintTop_toBottomOf="@id/textViewList" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.core.widget.NestedScrollView>

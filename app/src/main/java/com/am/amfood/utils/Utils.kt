@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.view.View
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -59,6 +60,11 @@ object Utils {
             bottomNav?.visibility = View.VISIBLE
         }
     }
+
+    fun setUpVisibilityProgressbar(progressBar: ProgressBar, isVisible: Boolean) {
+        progressBar.visibility = if (isVisible) View.VISIBLE else View.GONE
+    }
+
     fun intentActivityUseFinish(context: Context, targetActivity: Class<*>) {
         val intent = Intent(context, targetActivity)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK

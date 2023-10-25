@@ -12,8 +12,8 @@ class DetailViewModel : ViewModel() {
     private val _counter: MutableLiveData<Int> = MutableLiveData(0)
     val counter: LiveData<Int> = _counter
 
-    fun setValueProduct(cardModel: DataItem) {
-        _menu.value = cardModel
+    fun setValueProduct(dataItemMenu: DataItem) {
+        _menu.value = dataItemMenu
     }
 
     fun incrementCountQuantity() {

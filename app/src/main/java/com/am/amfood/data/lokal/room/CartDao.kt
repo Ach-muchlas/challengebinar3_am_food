@@ -14,10 +14,10 @@ import com.am.amfood.data.lokal.entity.Cart
 interface CartDao {
 
     @Query("Select * from Cart")
-    fun getAllCart(): LiveData<List<Cart>>
+    suspend fun getAllCart(): LiveData<List<Cart>>
 
     @Transaction
-    fun addCartToUpdate(cart: Cart) {
+    suspend fun addCartOrUpdate(cart: Cart) {
         val existingCart = getOrderById(cart.nameMenu)
         if (existingCart != null){
             val newQuantity = existingCart.quantityMenu + cart.quantityMenu
@@ -34,18 +34,17 @@ interface CartDao {
     fun getOrderById(name : String): Cart?
 
     @Query("Select SUM(priceMenu * quantityMenu) FROM cart")
-    fun getTotalPayment(): LiveData<Double>
+    suspend fun getTotalPayment(): LiveData<Double>
 
     @Query("DELETE FROM cart")
-    fun deleteAll()
+    suspend fun deleteAll()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(cart: Cart)
+    suspend fun insert(cart: Cart)
 
     @Delete
-    fun delete(cart: Cart)
+    suspend fun delete(cart: Cart)
 
     @Update
-    fun update(cart: Cart)
-
+    suspend fun update(cart: Cart)
 }

@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.am.amfood.data.lokal.entity.Cart
 import com.am.amfood.data.lokal.room.CartDatabase
 import com.am.amfood.data.source.CartRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class CartViewModel(application: Application) : AndroidViewModel(application) {
@@ -15,6 +16,7 @@ class CartViewModel(application: Application) : AndroidViewModel(application) {
     private val repository: CartRepository
     private val _messageToast = MutableLiveData("")
     val messageToast: LiveData<String> = _messageToast
+
 
     init {
         val dao = CartDatabase.getDatabaseInstance(application).cartDao()
@@ -35,6 +37,8 @@ class CartViewModel(application: Application) : AndroidViewModel(application) {
             }
         }
     }
+
+
 
     fun increment(cart: Cart) {
         cart.quantityMenu++
@@ -64,7 +68,7 @@ class CartViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun getAllCart(): LiveData<List<Cart>> = repository.getAllCart()
+//    fun getAllCart(): LiveData<List<Cart>> = repository.getAllCart()
 
     fun deleteItem(cart: Cart) {
         repository.deleteItem(cart)
