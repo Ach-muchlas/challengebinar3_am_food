@@ -40,9 +40,9 @@ class CheckOutFragment : Fragment() {
     ): View {
         binding = FragmentCheckOutBinding.inflate(inflater, container, false)
 
-        setUpBottomNavigation(activity, true)
-        setUpAppBar()
-        setUpDisplayCart()
+//        setUpBottomNavigation(activity, true)
+//        setUpAppBar()
+//        setUpDisplayCart()
 
         return binding.root
     }
@@ -54,37 +54,37 @@ class CheckOutFragment : Fragment() {
         }
     }
 
-    private fun setUpDisplayCart() {
-        firebaseConfiguration(requireContext())
-        firebaseAuth = Firebase.auth
-        val username = firebaseAuth.currentUser?.displayName
-
-        cartViewModel.getAllCart().observe(viewLifecycleOwner) { list ->
-            binding.rvCart.layoutManager = LinearLayoutManager(requireContext())
-            binding.rvCart.adapter = CartAdapter(list)
-
-            cartViewModel.getTotalPayment().observe(viewLifecycleOwner) { totalPayment ->
-                binding.textViewTotalPrice.text = Utils.formatCurrency(totalPayment)
-
-                val name = list[0].nameMenu
-                val price = list[0].priceMenu
-                val qty = list[0].quantityMenu
-                val note = list[0].note
-
-                val listOfOrder = OrdersItem(name, price.toInt(), qty, note)
-                binding.btnOrder.setOnClickListener {
-                    setUpCheckOutOrder(listOfOrder, totalPayment.toInt(), username ?: "Username not registered!!")
-                    cartViewModel.deleteDataCart()
-                    navigateToDestination(CHECKOUT_TO_HOME, findNavController())
-                    cartViewModel.messageToast.observe(viewLifecycleOwner) { message ->
-                        if (message.isNotEmpty()) {
-                            toastMessage(requireContext(), message)
-                        }
-                    }
-                }
-            }
-        }
-    }
+//    private fun setUpDisplayCart() {
+//        firebaseConfiguration(requireContext())
+//        firebaseAuth = Firebase.auth
+//        val username = firebaseAuth.currentUser?.displayName
+//
+//        cartViewModel.getAllCart().observe(viewLifecycleOwner) { list ->
+//            binding.rvCart.layoutManager = LinearLayoutManager(requireContext())
+//            binding.rvCart.adapter = CartAdapter(list)
+//
+//            cartViewModel.getTotalPayment().observe(viewLifecycleOwner) { totalPayment ->
+//                binding.textViewTotalPrice.text = Utils.formatCurrency(totalPayment)
+//
+//                val name = list[0].nameMenu
+//                val price = list[0].priceMenu
+//                val qty = list[0].quantityMenu
+//                val note = list[0].note
+//
+//                val listOfOrder = OrdersItem(name, price.toInt(), qty, note)
+//                binding.btnOrder.setOnClickListener {
+//                    setUpCheckOutOrder(listOfOrder, totalPayment.toInt(), username ?: "Username not registered!!")
+//                    cartViewModel.deleteDataCart()
+//                    navigateToDestination(CHECKOUT_TO_HOME, findNavController())
+//                    cartViewModel.messageToast.observe(viewLifecycleOwner) { message ->
+//                        if (message.isNotEmpty()) {
+//                            toastMessage(requireContext(), message)
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
 
     private fun firebaseConfiguration(context: Context) {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

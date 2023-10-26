@@ -20,7 +20,7 @@ data class MenuResponse(
 data class DataItem(
 
 	@field:SerializedName("hargaFormat")
-	val hargaFormat: String? = null,
+	val hargaFormat: String,
 
 	@field:SerializedName("nama")
 	val nama: String,
@@ -32,8 +32,8 @@ data class DataItem(
 	val imageUrl: String,
 
 	@field:SerializedName("detail")
-	val detail: String? = null,
+	val detail: String,
 
 	@field:SerializedName("alamatResto")
-	val alamatResto: String? = null
+	val alamatResto: String
 ): Parcelable

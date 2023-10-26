@@ -4,10 +4,10 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.am.amfood.data.di.Injection
-import com.am.amfood.data.source.Repository
+import com.am.amfood.data.source.MenuRepository
 
 @Suppress("UNCHECKED_CAST")
-class ViewModelFactory private constructor(private val repository: Repository) :
+class ViewModelFactory private constructor(private val repository: MenuRepository) :
     ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {

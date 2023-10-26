@@ -7,12 +7,16 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.am.amfood.R
 import com.am.amfood.data.lokal.entity.Cart
-import com.am.amfood.data.remote.response.DataItem
+import com.am.amfood.data.lokal.entity.MenuEntity
 import com.am.amfood.databinding.FragmentDetailBinding
-import com.am.amfood.ui.cart.CartViewModel
+import com.am.amfood.ui.viewmodel.DetailViewModel
+import com.am.amfood.ui.viewmodel.HomeViewModel
+import com.am.amfood.ui.viewmodel.ViewModelFactory
 import com.am.amfood.utils.Utils.DETAIL_TO_CART
 import com.am.amfood.utils.Utils.DETAIL_TO_HOME
 import com.am.amfood.utils.Utils.navigateToDestination
@@ -25,7 +29,8 @@ class DetailFragment : Fragment() {
     private val binding get() = _binding!!
     private val args: DetailFragmentArgs by navArgs()
     private val viewModel: DetailViewModel by viewModels()
-    private val cartViewModel: CartViewModel by viewModels()
+    private lateinit var factory: ViewModelFactory
+    private lateinit var homeViewModel: HomeViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,30 +41,36 @@ class DetailFragment : Fragment() {
 
         (activity as AppCompatActivity).supportActionBar?.hide()
 
+        factory = ViewModelFactory.getInstance(requireActivity())
+        homeViewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
+
         setUpBottomNavigation(activity, true)
         setUpViewDetail()
         countQuantityOrder()
-
 
         return view
     }
 
     private fun setUpViewDetail() {
-        val menu: DataItem = args.objectParcelable
+        val menu: MenuEntity = args.objectParcelable
         viewModel.setValueProduct(menu)
 
         viewModel.menu.observe(viewLifecycleOwner) { menuItem ->
             binding.apply {
                 Glide.with(binding.root.context).load(menuItem.imageUrl).into(binding.imageViewItem)
-                textViewNameItem.text = menuItem.nama
-                textViewValueDesc.text = menuItem.detail
-                textViewValuePrice.text = menuItem.hargaFormat
-                textViewValueLocation.text = menuItem.alamatResto
+                textViewNameItem.text = menuItem.title
+                textViewValueDesc.text = menuItem.description
+                textViewValuePrice.text = menuItem.priceString
+                textViewValueLocation.text = menuItem.address
                 Ratingbar.rating = 5.0F
                 cardBack.setOnClickListener {
                     navigateToDestination(DETAIL_TO_HOME, findNavController())
                 }
-
+                if (menu.isLike){
+                    likeDescription.setImageResource(R.drawable.hati)
+                }else{
+                    likeDescription.setImageResource(R.drawable.love)
+                }
             }
         }
     }
@@ -74,7 +85,7 @@ class DetailFragment : Fragment() {
             }
             viewModel.counter.observe(viewLifecycleOwner) { result ->
                 textViewQuantity.text = result.toString()
-                if (result > 0) {
+                if (result != 0) {
                     order()
                 }
             }
@@ -91,11 +102,11 @@ class DetailFragment : Fragment() {
     }
 
     private fun addOrder() {
-        val menu: DataItem = args.objectParcelable
+        val menu: MenuEntity = args.objectParcelable
         val photo = menu.imageUrl
-        val name = menu.nama
+        val name = menu.title
         val quantity = binding.textViewQuantity.text.toString()
-        val price = menu.harga
+        val price = menu.price
         val totalAmount = price.times(quantity.toInt())
 
         val data = Cart(
@@ -107,13 +118,13 @@ class DetailFragment : Fragment() {
             totalAmount = totalAmount.toDouble(),
         )
 
-        cartViewModel.addCartToUpdate(data)
+//        cartViewModel.addCartToUpdate(data)
 
-        cartViewModel.messageToast.observe(viewLifecycleOwner) { message ->
-            if (message.isNotEmpty()) {
-                toastMessage(requireContext(), message)
-            }
-        }
+//        cartViewModel.messageToast.observe(viewLifecycleOwner) { message ->
+//            if (message.isNotEmpty()) {
+//                toastMessage(requireContext(), message)
+//            }
+//        }
     }
 
 

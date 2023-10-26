@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.am.amfood.data.lokal.entity.Cart
 import com.am.amfood.data.lokal.room.CartDatabase
 import com.am.amfood.data.source.CartRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class CartViewModel(application: Application) : AndroidViewModel(application) {
@@ -62,7 +61,7 @@ class CartViewModel(application: Application) : AndroidViewModel(application) {
             try {
                 repository.addCartToUpdate(cart)
                 _messageToast.value = "Data Saved Successfully"
-            }catch (e : Exception){
+            } catch (e: Exception) {
                 _messageToast.value = "Data Failed to Save : ${e.message}"
             }
         }
@@ -70,8 +69,10 @@ class CartViewModel(application: Application) : AndroidViewModel(application) {
 
 //    fun getAllCart(): LiveData<List<Cart>> = repository.getAllCart()
 
-    fun deleteItem(cart: Cart) {
-        repository.deleteItem(cart)
+    private fun deleteItem(cart: Cart) {
+        viewModelScope.launch {
+            repository.deleteItem(cart)
+        }
     }
 
     fun deleteDataCart() {

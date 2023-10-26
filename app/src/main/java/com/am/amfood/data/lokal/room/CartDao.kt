@@ -14,7 +14,7 @@ import com.am.amfood.data.lokal.entity.Cart
 interface CartDao {
 
     @Query("Select * from Cart")
-    suspend fun getAllCart(): LiveData<List<Cart>>
+     fun getAllCart(): LiveData<List<Cart>>
 
     @Transaction
     suspend fun addCartOrUpdate(cart: Cart) {
@@ -34,7 +34,7 @@ interface CartDao {
     fun getOrderById(name : String): Cart?
 
     @Query("Select SUM(priceMenu * quantityMenu) FROM cart")
-    suspend fun getTotalPayment(): LiveData<Double>
+     fun getTotalPayment(): LiveData<Double>
 
     @Query("DELETE FROM cart")
     suspend fun deleteAll()

@@ -8,6 +8,11 @@
         app:destination="@id/navigation_home" />
 
     <item
+        android:id="@+id/navigation_like"
+        android:icon="@drawable/like"
+        android:title="@string/title_cart" />
+
+    <item
         android:id="@+id/navigation_cart"
         android:icon="@drawable/shop"
         android:title="@string/title_cart" />

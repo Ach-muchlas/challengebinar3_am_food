@@ -4,14 +4,13 @@ import android.content.Context
 import com.am.amfood.data.lokal.room.CartDatabase
 import com.am.amfood.data.remote.retrofit.ApiConfig
 import com.am.amfood.data.source.Preferences
-import com.am.amfood.data.source.Repository
+import com.am.amfood.data.source.MenuRepository
 
 object Injection {
-    fun provideRepository(context: Context): Repository {
+    fun provideRepository(context: Context): MenuRepository {
         val apiService = ApiConfig.getApiService()
         val database = CartDatabase.getDatabaseInstance(context)
-        val dao = database.cartDao()
-        val preferences = Preferences(context)
-        return Repository.getInstance(apiService, dao, preferences)
+        val menuDao = database.menuDao()
+        return MenuRepository.getInstance(apiService, menuDao)
     }
 }

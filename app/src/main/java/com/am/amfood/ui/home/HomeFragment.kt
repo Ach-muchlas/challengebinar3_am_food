@@ -11,8 +11,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.am.amfood.R
+import com.am.amfood.data.lokal.entity.MenuEntity
 import com.am.amfood.data.remote.response.CategoryResponse
-import com.am.amfood.data.remote.response.MenuResponse
 import com.am.amfood.data.source.Status
 import com.am.amfood.databinding.FragmentHomeBinding
 import com.am.amfood.ui.adapter.CategoryAdapter
@@ -66,7 +66,7 @@ class HomeFragment : Fragment() {
 
                     Status.SUCCESS -> {
                         Log.e("SIMPLE", "SUCCESS")
-                        setUpDataMenuAdapter(data = resource.data, isGrid)
+                        setUpDataMenuAdapter(resource.data, isGrid)
                         setUpLayoutManager(isGrid)
                         setUpVisibilityProgressbar(binding.progressBarMenu, false)
                         changeLayout()
@@ -84,7 +84,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun displayCategoryMenu() {
-        viewModel.getListCategoryMenu().observe(viewLifecycleOwner) { resource ->
+        viewModel.getCategoryMenu().observe(viewLifecycleOwner) { resource ->
             when (resource.status) {
                 Status.LOADING -> {
                     setUpVisibilityProgressbar(binding.progressBarCategoryMenu, true)
@@ -104,9 +104,15 @@ class HomeFragment : Fragment() {
     }
 
 
-    private fun setUpDataMenuAdapter(data: MenuResponse?, isGrid: Boolean) {
-        val adapter = MenuAdapter(isGrid)
-        adapter.submitList(data?.data)
+    private fun setUpDataMenuAdapter(data: List<MenuEntity>?, isGrid: Boolean) {
+        val adapter = MenuAdapter(isGrid) { menu ->
+            if (menu.isLike) {
+                viewModel.deleteLike(menu)
+            } else {
+                viewModel.saveLike(menu)
+            }
+        }
+        adapter.submitList(data)
         binding.recyclerViewMenu.adapter = adapter
     }
 

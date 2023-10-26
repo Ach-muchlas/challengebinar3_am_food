@@ -5,10 +5,13 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.am.amfood.data.lokal.entity.Cart
+import com.am.amfood.data.lokal.entity.MenuEntity
 
-@Database(entities = [Cart::class], version = 6)
+@Database(entities = [Cart::class, MenuEntity::class], version = 9)
 abstract class CartDatabase : RoomDatabase() {
     abstract fun cartDao(): CartDao
+    abstract fun menuDao(): MenuDao
+
 
     companion object {
         @Volatile

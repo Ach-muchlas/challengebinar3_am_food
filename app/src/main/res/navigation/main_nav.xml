@@ -35,7 +35,7 @@
         android:id="@+id/navigation_profile"
         android:name="com.am.amfood.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
-        tools:layout="@layout/fragment_profile" >
+        tools:layout="@layout/fragment_profile">
         <action
             android:id="@+id/action_navigation_profile_to_navigation_home"
             app:destination="@id/navigation_home"
@@ -43,14 +43,20 @@
     </fragment>
 
     <fragment
+        android:id="@+id/navigation_like"
+        android:name="com.am.amfood.ui.like.LikeFragment"
+        android:label="fragment_like"
+        tools:layout="@layout/fragment_like" />
+
+    <fragment
         android:id="@+id/detailFragment"
         android:name="com.am.amfood.ui.detail.DetailFragment"
         android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail" >
+        tools:layout="@layout/fragment_detail">
 
         <argument
             android:name="object_parcelable"
-            app:argType="com.am.amfood.data.remote.response.DataItem" />
+            app:argType="com.am.amfood.data.lokal.entity.MenuEntity" />
         <argument
             android:name="name"
             app:argType="string"

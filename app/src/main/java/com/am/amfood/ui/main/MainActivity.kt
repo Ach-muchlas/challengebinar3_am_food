@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.am.amfood.R
+import com.am.amfood.data.source.Preferences
 import com.am.amfood.databinding.ActivityMainBinding
 import com.am.amfood.ui.auth.AuthActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -21,6 +22,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
+        Preferences.init(context = this)
         setContentView(binding.root)
         setUpIntentLauncher()
         setUpDisplayBottomNavigation()

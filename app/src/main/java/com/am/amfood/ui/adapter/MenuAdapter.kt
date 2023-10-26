@@ -1,37 +1,42 @@
 package com.am.amfood.ui.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.am.amfood.R
+import com.am.amfood.data.lokal.entity.MenuEntity
 import com.am.amfood.databinding.ContainerItemGridBinding
 import com.am.amfood.databinding.ContainerItemLinearBinding
-import com.am.amfood.data.remote.response.DataItem
 import com.am.amfood.ui.home.HomeFragmentDirections
 import com.bumptech.glide.Glide
 
 class MenuAdapter(
-    private val isGrid: Boolean
+    private val isGrid: Boolean,
+    private val onLikeClicked: (MenuEntity) -> Unit
 ) :
-    ListAdapter<DataItem, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
+    ListAdapter<MenuEntity, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
 
-    inner class MenuLinearViewHolder(private var binding: ContainerItemLinearBinding) :
+    inner class MenuLinearViewHolder(var binding: ContainerItemLinearBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bindContentLinear(menu: DataItem) {
+        fun bindContentLinear(menu: MenuEntity) {
             Glide.with(binding.root.context).load(menu.imageUrl).into(binding.imageProductLinear)
-            binding.tvNameProductLinear.text = menu.nama
-            binding.tvPriceProductLinear.text = menu.hargaFormat
+            binding.tvNameProductLinear.text = menu.title
+            binding.tvPriceProductLinear.text = menu.priceString
         }
     }
 
-    inner class MenuGridViewHolder(private var binding: ContainerItemGridBinding) :
+    inner class MenuGridViewHolder(var binding: ContainerItemGridBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bindContentGrid(menu: DataItem) {
+        fun bindContentGrid(menu: MenuEntity) {
             Glide.with(binding.root.context).load(menu.imageUrl).into(binding.imageViewItem)
-            binding.textViewNameItem.text = menu.nama
-            binding.textViewPrice.text = menu.hargaFormat
+            binding.textViewNameItem.text = menu.title
+            binding.textViewPrice.text = menu.priceString
         }
     }
 
@@ -58,34 +63,77 @@ class MenuAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (isGrid) {
             val gridHolder = holder as MenuGridViewHolder
-            gridHolder.bindContentGrid(getItem(position))
+            val menu = getItem(position)
+            gridHolder.bindContentGrid(menu)
             gridHolder.itemView.setOnClickListener {
                 val action =
                     HomeFragmentDirections.actionNavigationHomeToDetailFragment(getItem(position))
                 it.findNavController().navigate(action)
             }
-        } else{
+            val iconLike = gridHolder.binding.like
+
+            if (menu.isLike) {
+                iconLike.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        iconLike.context,
+                        R.drawable.hati
+                    )
+                )
+
+            } else {
+                iconLike.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        iconLike.context,
+                        R.drawable.love
+                    )
+                )
+            }
+            iconLike.setOnClickListener {
+                onLikeClicked(menu)
+            }
+        } else {
             val linearHolder = holder as MenuLinearViewHolder
-            linearHolder.bindContentLinear(getItem(position))
+            val menu = getItem(position)
+            linearHolder.bindContentLinear(menu)
             linearHolder.itemView.setOnClickListener {
                 val action =
                     HomeFragmentDirections.actionNavigationHomeToDetailFragment(getItem(position))
                 it.findNavController().navigate(action)
             }
+            val iconLike = linearHolder.binding.like
+            if (menu.isLike) {
+                iconLike.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        iconLike.context,
+                        R.drawable.hati
+                    )
+                )
+            } else {
+                iconLike.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        iconLike.context,
+                        R.drawable.love
+                    )
+                )
+            }
+            iconLike.setOnClickListener {
+                onLikeClicked(menu)
+            }
         }
     }
     companion object{
-        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<DataItem>() {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<MenuEntity>() {
             override fun areItemsTheSame(
-                oldItem: DataItem,
-                newItem: DataItem
+                oldItem: MenuEntity,
+                newItem: MenuEntity
             ): Boolean {
                 return oldItem == newItem
             }
 
+            @SuppressLint("DiffUtilEquals")
             override fun areContentsTheSame(
-                oldItem: DataItem,
-                newItem: DataItem
+                oldItem: MenuEntity,
+                newItem: MenuEntity
             ): Boolean {
                 return oldItem == newItem
             }

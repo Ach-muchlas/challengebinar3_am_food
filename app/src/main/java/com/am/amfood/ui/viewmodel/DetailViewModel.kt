@@ -1,19 +1,19 @@
-package com.am.amfood.ui.detail
+package com.am.amfood.ui.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.am.amfood.data.remote.response.DataItem
+import com.am.amfood.data.lokal.entity.MenuEntity
 
 class DetailViewModel : ViewModel() {
-    private val _menu = MutableLiveData<DataItem>()
-    val menu: LiveData<DataItem> = _menu
+    private val _menu = MutableLiveData<MenuEntity>()
+    val menu: LiveData<MenuEntity> = _menu
 
     private val _counter: MutableLiveData<Int> = MutableLiveData(0)
     val counter: LiveData<Int> = _counter
 
-    fun setValueProduct(dataItemMenu: DataItem) {
-        _menu.value = dataItemMenu
+    fun setValueProduct(dataItem : MenuEntity) {
+        _menu.value = dataItem
     }
 
     fun incrementCountQuantity() {
