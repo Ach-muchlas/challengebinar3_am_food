@@ -1,75 +1,57 @@
 package com.am.amfood.ui.cart
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.am.amfood.data.lokal.entity.Cart
-import com.am.amfood.data.lokal.room.CartDatabase
-import com.am.amfood.data.source.CartRepository
+import com.am.amfood.data.source.repository.CartRepository
 import kotlinx.coroutines.launch
 
-class CartViewModel(application: Application) : AndroidViewModel(application) {
-
-    private val repository: CartRepository
+class CartViewModel(private val repository: CartRepository) : ViewModel() {
     private val _messageToast = MutableLiveData("")
     val messageToast: LiveData<String> = _messageToast
+    fun getAllCartaData() = repository.getDataCart()
+    fun getTotalPaymentData() = repository.getDataTotalPayment()
 
-
-    init {
-        val dao = CartDatabase.getDatabaseInstance(application).cartDao()
-        repository = CartRepository(dao)
+    fun addDataOrUpdateCartData(cart: Cart) {
+        viewModelScope.launch {
+            try {
+                repository.addDataOrUpdateCartData(cart)
+                _messageToast.value = "Successful send data"
+            } catch (exception: Exception) {
+                _messageToast.value = "Error Occurred send data ${exception.message}"
+            }
+        }
     }
-
-    fun getTotalPayment(): LiveData<Double> {
-        return repository.getTotalPayment()
-    }
-
     private fun updateCart(cart: Cart) {
         viewModelScope.launch {
             try {
                 repository.updateCart(cart)
-                _messageToast.value = "Data Saved Successfully"
+                _messageToast.value = "Successful Update Data"
             } catch (e: Exception) {
                 _messageToast.value = "Data failed to save : ${e.message}"
             }
         }
     }
 
-
-
     fun increment(cart: Cart) {
         cart.quantityMenu++
         cart.totalAmount = cart.priceMenu * cart.quantityMenu
         updateCart(cart)
     }
-
     fun decrement(cart: Cart) {
         if (cart.quantityMenu > 0) {
             cart.quantityMenu--
             cart.totalAmount = cart.priceMenu * cart.quantityMenu
             updateCart(cart)
-            if (cart.quantityMenu == 0){
+            if (cart.quantityMenu == 0) {
                 deleteItem(cart)
             }
         }
     }
 
-    fun addCartToUpdate(cart: Cart){
-        viewModelScope.launch {
-            try {
-                repository.addCartToUpdate(cart)
-                _messageToast.value = "Data Saved Successfully"
-            } catch (e: Exception) {
-                _messageToast.value = "Data Failed to Save : ${e.message}"
-            }
-        }
-    }
-
-//    fun getAllCart(): LiveData<List<Cart>> = repository.getAllCart()
-
-    private fun deleteItem(cart: Cart) {
+    fun deleteItem(cart: Cart) {
         viewModelScope.launch {
             repository.deleteItem(cart)
         }

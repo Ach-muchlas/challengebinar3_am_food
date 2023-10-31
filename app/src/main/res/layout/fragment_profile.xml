@@ -1,159 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.profile.ProfileFragment">
 
-    <include
-        android:id="@+id/appbar"
-        layout="@layout/appbar"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp" />
+        android:layout_height="match_parent">
+        <include
+            android:id="@+id/appbar"
+            layout="@layout/appbar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardMyPhotos"
-        android:layout_width="180dp"
-        android:layout_height="180dp"
-        android:layout_marginTop="20dp"
-        android:elevation="10dp"
-        app:cardCornerRadius="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appbar">
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardMyPhotos"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:layout_marginTop="20dp"
+            android:elevation="10dp"
+            app:cardCornerRadius="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/appbar">
 
-        <ImageView
-            android:id="@+id/imageViewAvatar"
+            <ImageView
+                android:id="@+id/imageViewAvatar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/my_photos"
+                android:scaleType="centerCrop"
+                android:src="@drawable/me" />
+        </androidx.cardview.widget.CardView>
+
+        <include
+            android:id="@+id/cardFollowers"
+            layout="@layout/card_follower"
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardMyPhotos" />
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/my_photos"
-            android:scaleType="centerCrop"
-            android:src="@drawable/me" />
-    </androidx.cardview.widget.CardView>
+            android:id="@+id/textUsername"
+            style="@style/CustomTextBold"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/username"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardFollowers" />
 
-    <include
-        android:id="@+id/cardFollowers"
-        layout="@layout/card_follower"
-        android:layout_width="match_parent"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cardMyPhotos" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textValueUsername"
+            style="@style/CustomTextReg"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/username"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textUsername" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textUsername"
-        style="@style/CustomTextBold"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/username"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cardFollowers" />
+        <TextView
+            android:id="@+id/textPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/CustomTextBold"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/password"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textValueUsername" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textValueUsername"
-        style="@style/CustomTextReg"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="5dp"
-        android:text="@string/username"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textUsername" />
+        <TextView
+            android:id="@+id/textValuePassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/CustomTextReg"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/username"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textPassword" />
 
-    <TextView
-        android:id="@+id/textPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/CustomTextBold"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="15dp"
-        android:text="@string/password"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textValueUsername" />
+        <TextView
+            android:id="@+id/textEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/CustomTextBold"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/email"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textValuePassword" />
 
-    <TextView
-        android:id="@+id/textValuePassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/CustomTextReg"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="5dp"
-        android:text="@string/username"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textPassword" />
+        <TextView
+            android:id="@+id/textValueEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/CustomTextReg"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/email"
 
-    <TextView
-        android:id="@+id/textEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/CustomTextBold"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="15dp"
-        android:text="@string/email"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textValuePassword" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textEmail" />
 
-    <TextView
-        android:id="@+id/textValueEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/CustomTextReg"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="5dp"
-        android:text="@string/email"
+        <TextView
+            android:id="@+id/textPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/CustomTextBold"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/phone"
 
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textEmail" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textValueEmail" />
 
-    <TextView
-        android:id="@+id/textPhone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/CustomTextBold"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/phone"
+        <TextView
+            android:id="@+id/textValuePhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/CustomTextReg"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/phone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textPhone" />
 
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textValueEmail" />
+        <ImageView
+            android:id="@+id/iconLogOut"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="20dp"
+            android:contentDescription="@string/iconlogout"
+            android:src="@drawable/logout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textValuePhone" />
 
-    <TextView
-        android:id="@+id/textValuePhone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/CustomTextReg"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="5dp"
-        android:text="@string/phone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textPhone" />
+        <TextView
+            android:id="@+id/textLogout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/CustomTextBold"
+            android:layout_marginStart="10dp"
+            android:text="@string/logout"
+            android:textColor="@color/gold"
+            app:layout_constraintBottom_toBottomOf="@id/iconLogOut"
+            app:layout_constraintStart_toEndOf="@id/iconLogOut"
+            app:layout_constraintTop_toTopOf="@id/iconLogOut" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ImageView
-        android:id="@+id/iconLogOut"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="20dp"
-        android:contentDescription="@string/iconlogout"
-        android:src="@drawable/logout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textValuePhone" />
-
-    <TextView
-        android:id="@+id/textLogout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/CustomTextBold"
-        android:layout_marginStart="10dp"
-        android:text="@string/logout"
-        android:textColor="@color/gold"
-        app:layout_constraintBottom_toBottomOf="@id/iconLogOut"
-        app:layout_constraintStart_toEndOf="@id/iconLogOut"
-        app:layout_constraintTop_toTopOf="@id/iconLogOut" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

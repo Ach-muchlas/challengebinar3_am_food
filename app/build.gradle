@@ -68,7 +68,6 @@ dependencies {
     // library untuk circle image
     implementation("de.hdodenhof:circleimageview:3.1.0")
 
-
     //room
     implementation("androidx.room:room-runtime:2.5.2")
     ksp("androidx.room:room-compiler:2.5.2")
@@ -84,13 +83,14 @@ dependencies {
     /*firebase*/
     implementation("com.google.firebase:firebase-auth-ktx:22.1.0")
     implementation("com.google.android.gms:play-services-auth:20.6.0")
-
-
     implementation 'com.google.firebase:firebase-database-ktx:20.2.2'
     implementation("com.firebaseui:firebase-ui-database:8.0.0")
 
-
-//    implementation "com.google.dagger:dagger:2.38"
-//    kapt "com.google.dagger:dagger-compiler:2.38"
+    /*Koin Dependency Injection*/
+    implementation ("io.insert-koin:koin-core:3.2.2")
+    implementation ("io.insert-koin:koin-android:3.3.0")
+    implementation ("io.insert-koin:koin-android-compat:3.3.0")
+    implementation ("io.insert-koin:koin-androidx-workmanager:3.3.0")
+    implementation ("io.insert-koin:koin-androidx-navigation:3.3.0")
 
 }

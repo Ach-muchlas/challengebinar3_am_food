@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/navigation_home"
         android:icon="@drawable/home"
-        android:title="@string/title_home"
-        app:destination="@id/navigation_home" />
+        android:title="@string/title_home" />
 
     <item
         android:id="@+id/navigation_like"
         android:icon="@drawable/like"
-        android:title="@string/title_cart" />
+        android:title="@string/title_like" />
 
     <item
         android:id="@+id/navigation_cart"

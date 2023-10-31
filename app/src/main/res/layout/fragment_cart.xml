@@ -12,10 +12,20 @@
         android:layout_width="match_parent"
         android:layout_height="50dp" />
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/layoutCheckOut"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/appbar" />
+
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvCart"
+        android:id="@+id/recyclerViewCart"
         android:layout_width="match_parent"
         tools:listitem="@layout/item_cart"
+        tools:itemCount="1"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/layoutCheckOut"
         app:layout_constraintTop_toBottomOf="@id/appbar" />

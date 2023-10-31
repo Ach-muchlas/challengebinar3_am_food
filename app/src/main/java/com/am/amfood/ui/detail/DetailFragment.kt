@@ -7,30 +7,27 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.am.amfood.R
 import com.am.amfood.data.lokal.entity.Cart
 import com.am.amfood.data.lokal.entity.MenuEntity
 import com.am.amfood.databinding.FragmentDetailBinding
-import com.am.amfood.ui.viewmodel.DetailViewModel
-import com.am.amfood.ui.viewmodel.HomeViewModel
-import com.am.amfood.ui.viewmodel.ViewModelFactory
+import com.am.amfood.ui.cart.CartViewModel
 import com.am.amfood.utils.Utils.DETAIL_TO_CART
 import com.am.amfood.utils.Utils.DETAIL_TO_HOME
 import com.am.amfood.utils.Utils.navigateToDestination
 import com.am.amfood.utils.Utils.setUpBottomNavigation
 import com.am.amfood.utils.Utils.toastMessage
 import com.bumptech.glide.Glide
+import org.koin.android.ext.android.inject
 
 class DetailFragment : Fragment() {
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
     private val args: DetailFragmentArgs by navArgs()
     private val viewModel: DetailViewModel by viewModels()
-    private lateinit var factory: ViewModelFactory
-    private lateinit var homeViewModel: HomeViewModel
+    private val cartViewModel: CartViewModel by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,10 +37,6 @@ class DetailFragment : Fragment() {
         val view = binding.root
 
         (activity as AppCompatActivity).supportActionBar?.hide()
-
-        factory = ViewModelFactory.getInstance(requireActivity())
-        homeViewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
-
         setUpBottomNavigation(activity, true)
         setUpViewDetail()
         countQuantityOrder()
@@ -51,6 +44,8 @@ class DetailFragment : Fragment() {
         return view
     }
 
+    /*This function is used to display detailed menu data.*/
+    /*when the user presses one of the menus on home*/
     private fun setUpViewDetail() {
         val menu: MenuEntity = args.objectParcelable
         viewModel.setValueProduct(menu)
@@ -62,19 +57,21 @@ class DetailFragment : Fragment() {
                 textViewValueDesc.text = menuItem.description
                 textViewValuePrice.text = menuItem.priceString
                 textViewValueLocation.text = menuItem.address
-                Ratingbar.rating = 5.0F
+                Ratingbar.rating = 5.0F // this data is dummy data
                 cardBack.setOnClickListener {
+                    /*this function is used when user wants to return to home*/
                     navigateToDestination(DETAIL_TO_HOME, findNavController())
                 }
-                if (menu.isLike){
+                if (menu.isLike) {
                     likeDescription.setImageResource(R.drawable.hati)
-                }else{
+                } else {
                     likeDescription.setImageResource(R.drawable.love)
                 }
             }
         }
     }
 
+    /*This function is only for logic when the user presses the increment or decrement button*/
     private fun countQuantityOrder() {
         binding.apply {
             btnPlus.setOnClickListener {
@@ -92,6 +89,8 @@ class DetailFragment : Fragment() {
         }
     }
 
+    /*This function is used to order menu items*/
+    /*This function runs when the user clicks the order button*/
     private fun order() {
         binding.apply {
             btnOrder.setOnClickListener {
@@ -101,6 +100,7 @@ class DetailFragment : Fragment() {
         }
     }
 
+    /*This function is used to enter menu data needed when saving data in the cart database*/
     private fun addOrder() {
         val menu: MenuEntity = args.objectParcelable
         val photo = menu.imageUrl
@@ -118,13 +118,13 @@ class DetailFragment : Fragment() {
             totalAmount = totalAmount.toDouble(),
         )
 
-//        cartViewModel.addCartToUpdate(data)
+        /*store data to cart database */
+        cartViewModel.addDataOrUpdateCartData(data)
 
-//        cartViewModel.messageToast.observe(viewLifecycleOwner) { message ->
-//            if (message.isNotEmpty()) {
-//                toastMessage(requireContext(), message)
-//            }
-//        }
+        /*displays a toast if successful or failed when store data to database */
+        cartViewModel.messageToast.observe(viewLifecycleOwner) { message ->
+            toastMessage(requireContext(), message)
+        }
     }
 
 

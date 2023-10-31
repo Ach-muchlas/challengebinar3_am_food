@@ -1,9 +1,9 @@
 package com.am.amfood.ui.adapter
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
@@ -96,6 +96,7 @@ class MenuAdapter(
             val menu = getItem(position)
             linearHolder.bindContentLinear(menu)
             linearHolder.itemView.setOnClickListener {
+
                 val action =
                     HomeFragmentDirections.actionNavigationHomeToDetailFragment(getItem(position))
                 it.findNavController().navigate(action)

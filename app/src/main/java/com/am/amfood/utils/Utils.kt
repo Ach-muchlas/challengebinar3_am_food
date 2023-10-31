@@ -47,7 +47,7 @@ object Utils {
                 CHECKOUT_TO_HOME -> it.navigate(R.id.action_checkOutFragment_to_navigation_home)
                 CHECKOUT_TO_CART -> it.navigate(R.id.action_checkOutFragment_to_navigation_cart)
                 HOME_TO_CART -> it.navigate(R.id.action_navigation_home_to_navigation_cart)
-                else -> "Incorrect or invalid your destination"
+                else -> throw IllegalArgumentException("Incorrect or invalid your destination")
             }
         }
     }

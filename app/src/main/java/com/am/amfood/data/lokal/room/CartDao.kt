@@ -14,7 +14,7 @@ import com.am.amfood.data.lokal.entity.Cart
 interface CartDao {
 
     @Query("Select * from Cart")
-     fun getAllCart(): LiveData<List<Cart>>
+     fun getAllCart(): List<Cart>
 
     @Transaction
     suspend fun addCartOrUpdate(cart: Cart) {
@@ -40,11 +40,11 @@ interface CartDao {
     suspend fun deleteAll()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(cart: Cart)
+    fun insert(cart: Cart)
 
     @Delete
-    suspend fun delete(cart: Cart)
+    fun delete(cart: Cart)
 
     @Update
-    suspend fun update(cart: Cart)
+    fun update(cart: Cart)
 }

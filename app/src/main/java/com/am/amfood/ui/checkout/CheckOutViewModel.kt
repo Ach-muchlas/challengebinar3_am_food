@@ -1,27 +1,13 @@
 package com.am.amfood.ui.checkout
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
-import com.am.amfood.data.remote.response.OrderResponse
 import com.am.amfood.data.remote.response.OrdersItem
-import com.am.amfood.data.remote.retrofit.ApiConfig
-import com.am.amfood.data.source.Result
+import com.am.amfood.data.source.repository.CartRepository
 
-class CheckOutViewModel : ViewModel() {
-
+class CheckOutViewModel(private val repository: CartRepository) : ViewModel() {
     fun checkOutOrder(
         username: String,
         total: Int,
         order: OrdersItem
-    ): LiveData<Result<OrderResponse>> = liveData {
-        val orderItem = OrderResponse(total, listOf(order), username)
-        try {
-            val response = ApiConfig.getApiService().orderMenu(orderItem)
-            emit(Result.Success(response))
-        }catch (e : Exception){
-            emit(Result.Error("Error : ${e.message}"))
-        }
-    }
-
+    ) = repository.postCheckOutOrder(username, total, order)
 }

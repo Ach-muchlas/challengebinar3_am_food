@@ -17,14 +17,14 @@ interface MenuDao {
     fun getMenuLikeFromDatabase(): LiveData<List<MenuEntity>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertMenu(menu: List<MenuEntity>)
+     fun insertMenu(menu: List<MenuEntity>)
 
     @Query("DELETE FROM menu WHERE `like` = 0")
-    suspend fun deleteAllMenu()
+     fun deleteAllMenu()
 
     @Update
-    suspend fun updateMenu(menu: MenuEntity)
+     fun updateMenu(menu: MenuEntity)
 
     @Query("SELECT EXISTS(SELECT * FROM menu WHERE title = :title AND `like` = 1)")
-    suspend fun isMenuLike(title: String): Boolean
+    fun isMenuLike(title: String): Boolean
 }

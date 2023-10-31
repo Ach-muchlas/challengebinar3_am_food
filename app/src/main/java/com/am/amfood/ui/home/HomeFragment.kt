@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,27 +16,20 @@ import com.am.amfood.data.source.Status
 import com.am.amfood.databinding.FragmentHomeBinding
 import com.am.amfood.ui.adapter.CategoryAdapter
 import com.am.amfood.ui.adapter.MenuAdapter
-import com.am.amfood.ui.viewmodel.HomeViewModel
-import com.am.amfood.ui.viewmodel.ViewModelFactory
-import com.am.amfood.utils.Utils
+import com.am.amfood.ui.profile.ProfileViewModel
 import com.am.amfood.utils.Utils.HOME_TO_CART
-import com.am.amfood.utils.Utils.HOME_TO_PROFILE
 import com.am.amfood.utils.Utils.navigateToDestination
 import com.am.amfood.utils.Utils.setUpBottomNavigation
 import com.am.amfood.utils.Utils.setUpVisibilityProgressbar
 import com.am.amfood.utils.Utils.toastMessage
 import com.bumptech.glide.Glide
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
+import org.koin.android.ext.android.inject
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private lateinit var util: Utils
-    private lateinit var firebaseAuth: FirebaseAuth
-    private lateinit var factory: ViewModelFactory
-    private lateinit var viewModel: HomeViewModel
+    private val viewModel: HomeViewModel by inject()
+    private val profileViewModel: ProfileViewModel by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -45,17 +37,15 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         setUpBottomNavigation(activity, false)
-        factory = ViewModelFactory.getInstance(requireActivity())
-        viewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
-
         displaysListMenu()
         displayCategoryMenu()
         navigateToProfile()
-        navigateToShop()
+        setUpProfile()
 
         return binding.root
     }
 
+    /*this function is used to display menu data*/
     private fun displaysListMenu() {
         viewModel.isGridlayout.observe(viewLifecycleOwner) { isGrid ->
             viewModel.getListMenu().observe(viewLifecycleOwner) { resource ->
@@ -65,10 +55,8 @@ class HomeFragment : Fragment() {
                     }
 
                     Status.SUCCESS -> {
-                        Log.e("SIMPLE", "SUCCESS")
-                        setUpDataMenuAdapter(resource.data, isGrid)
-                        setUpLayoutManager(isGrid)
                         setUpVisibilityProgressbar(binding.progressBarMenu, false)
+                        setUpDataMenuAdapter(resource.data, isGrid)
                         changeLayout()
                     }
 
@@ -78,11 +66,11 @@ class HomeFragment : Fragment() {
                         toastMessage(requireContext(), resource.message.toString())
                     }
                 }
-
             }
         }
     }
 
+    /*this function is used to display category menu data */
     private fun displayCategoryMenu() {
         viewModel.getCategoryMenu().observe(viewLifecycleOwner) { resource ->
             when (resource.status) {
@@ -112,6 +100,7 @@ class HomeFragment : Fragment() {
                 viewModel.saveLike(menu)
             }
         }
+        setUpLayoutManager(isGrid)
         adapter.submitList(data)
         binding.recyclerViewMenu.adapter = adapter
     }
@@ -148,12 +137,18 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun setUpProfile() {
+        profileViewModel.fetchDataCurrentUser()
+        profileViewModel.getDataCurrentUser()
+            .observe(viewLifecycleOwner) { user ->
+                Glide.with(requireContext()).load(user.photoUrl).into(binding.cardProfile)
+            }
+        navigateToProfile()
+    }
+
     private fun navigateToProfile() {
-        firebaseAuth = Firebase.auth
-        val photoUrl = firebaseAuth.currentUser?.photoUrl
-        Glide.with(requireContext()).load(photoUrl).into(binding.cardProfile)
         binding.cardProfile.setOnClickListener {
-            util.navigateToDestination(HOME_TO_PROFILE, findNavController())
+            findNavController().navigate(R.id.action_navigation_home_to_navigation_profile)
         }
     }
 }

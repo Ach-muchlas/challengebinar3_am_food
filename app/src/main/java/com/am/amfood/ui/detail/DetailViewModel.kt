@@ -1,4 +1,4 @@
-package com.am.amfood.ui.viewmodel
+package com.am.amfood.ui.detail
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
