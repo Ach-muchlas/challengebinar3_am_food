@@ -5,10 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import com.am.amfood.databinding.FragmentRegisterBinding
 import com.am.amfood.ui.auth.AuthViewModel
-import com.google.firebase.auth.FirebaseAuth
 import org.koin.android.ext.android.inject
 
 
@@ -38,6 +36,7 @@ class RegisterFragment : Fragment() {
                 password.toString(),
                 phone.toString(),
             )
+
         }
     }
 

@@ -84,6 +84,7 @@
     <string name="iconlogout">IconLogOut</string>
     <string name="logout">LOGOUT</string>
     <string name="empty_data_cart">Empty data cart</string>
+    <string name="image_view_vector">imageViewVector</string>
 
 
 </resources>

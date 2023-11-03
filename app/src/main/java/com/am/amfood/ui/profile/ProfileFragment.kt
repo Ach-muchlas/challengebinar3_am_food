@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.am.amfood.R
 import com.am.amfood.databinding.FragmentProfileBinding
 import com.am.amfood.ui.auth.AuthActivity
@@ -26,8 +27,9 @@ class ProfileFragment : Fragment() {
     ): View {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         setUpContentAppBar()
-        getDataUser()
+        fetchDataUser()
         signOut()
+        editProfile()
 
         return binding.root
     }
@@ -36,20 +38,20 @@ class ProfileFragment : Fragment() {
         binding.appbar.let {
             it.btnBack.visibility = View.GONE
             it.textViewAppbar.text = getString(R.string.profile)
+            it.btnEdit.setImageResource(R.drawable.edit)
         }
     }
 
-    private fun getDataUser() {
-        viewModel.fetchDataCurrentUser()
-        viewModel.getDataCurrentUser().observe(viewLifecycleOwner) { user ->
-            binding.apply {
-                textValueUsername.text =
-                    user.displayName ?: formatNameFromEmail(user.email.toString())
-                textValueEmail.text = user.email
-                textValuePassword.text = user.uid
-                textValuePhone.text = user.phoneNumber
-                Glide.with(requireContext()).load(user.photoUrl).into(binding.imageViewAvatar)
-            }
+    private fun fetchDataUser() {
+        viewModel.fetchDataUserWithDatabase()
+        viewModel.userData.observe(viewLifecycleOwner) { dataUser ->
+            binding.textValueUsername.text =
+                dataUser.username ?: formatNameFromEmail(dataUser.email.toString())
+            binding.textValueEmail.text = dataUser.email
+            binding.textValuePassword.text = dataUser.passwordUid
+            binding.textValuePhone.text = dataUser.phone
+            Glide.with(requireContext()).load(dataUser.imageUrl ?: R.drawable.profile)
+                .into(binding.imageViewAvatar)
         }
     }
 
@@ -57,6 +59,13 @@ class ProfileFragment : Fragment() {
         binding.textLogout.setOnClickListener {
             authViewModel.signOutUser()
             intentActivityUseFinish(requireContext(), AuthActivity::class.java)
+        }
+    }
+
+    private fun editProfile() {
+        binding.appbar.btnEdit.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_profile_to_updateProfileFragment)
+
         }
     }
 

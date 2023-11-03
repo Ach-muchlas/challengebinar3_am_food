@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import com.am.amfood.databinding.FragmentLoginBinding
 import com.am.amfood.ui.auth.AuthActivity
 import com.am.amfood.ui.auth.AuthViewModel
+import com.am.amfood.ui.profile.ProfileViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
 import org.koin.android.ext.android.inject
@@ -19,7 +20,7 @@ class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
     private val viewModel: AuthViewModel by inject()
-
+    private val profileViewModel: ProfileViewModel by inject()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -31,18 +32,24 @@ class LoginFragment : Fragment() {
 
 
     private fun setUpLoginOrSigIn() {
-        val email = binding.edtLoginEmail.text.toString()
-        val password = binding.edtLoginPassword.text.toString()
-
         binding.apply {
             buttonTextSigIn.setOnClickListener {
                 viewModel.signInUser(resultLauncher)
             }
 
             btnLogin.setOnClickListener {
-                viewModel.loginUserWithEmailPassword(email, password)
+                loginUser()
             }
+
         }
+    }
+
+    private fun loginUser() {
+        val email = binding.edtLoginEmail.text.toString()
+        val password = binding.edtLoginPassword.text.toString()
+        viewModel.loginUserWithEmailPassword(email, password)
+
+        Log.e(AuthActivity.TAG, email + password)
     }
 
     private var resultLauncher =
@@ -55,11 +62,8 @@ class LoginFragment : Fragment() {
                     viewModel.firebaseAuthWithGoogle(
                         account.idToken!!,
                         requireContext(),
-                        account.displayName.toString(),
-                        account.email.toString(),
-                        account.idToken.toString(),
-                        account.photoUrl.toString()
                     )
+
                 } catch (e: Exception) {
                     Log.w(AuthActivity.TAG, "Google Sign In Failed ", e)
                 }

@@ -2,18 +2,24 @@ package com.am.amfood.data.source.repository
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import com.am.amfood.R
+import com.am.amfood.data.remote.firebase.DataUser
+import com.am.amfood.ui.auth.AuthActivity
 import com.am.amfood.ui.main.MainActivity
 import com.am.amfood.ui.profile.ProfileFragment
+import com.am.amfood.utils.Utils.formatNameFromEmail
 import com.am.amfood.utils.Utils.intentActivityUseFinish
 import com.am.amfood.utils.Utils.toastMessage
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
 
 class AuthRepository(
     val firebaseAuth: FirebaseAuth,
@@ -58,6 +64,7 @@ class AuthRepository(
                 val user = firebaseAuth.currentUser
                 val userData = hashMapOf(
                     "email" to email,
+                    "password" to user?.uid,
                     "phone" to phone
                 )
                 user?.uid?.let { uid ->
@@ -83,15 +90,52 @@ class AuthRepository(
                 intentActivityUseFinish(context, MainActivity::class.java)
                 toastMessage(context, "Login Successful")
             } else {
-                toastMessage(context, "Login Failed : ${task.exception}")
+                toastMessage(context, "Login Failed : ${task.exception?.message}")
+                Log.e(AuthActivity.TAG, "Login Failed : ${task.exception?.message}")
             }
         }
     }
 
+    /*function is used to fetch data user in profile fragment */
+    /*function retrieves user data from firebase realtime database*/
+    fun getDataUserWithDatabase(callback: (DataUser?) -> Unit) {
+        val uid = firebaseAuth.currentUser?.uid
 
-    /*function for get data users in firebase auth */
-    fun getDataUser(): FirebaseUser? {
-        return firebaseAuth.currentUser
+        uid?.let {
+            firebaseDatabaseReference.child(ProfileFragment.USERS).child(uid)
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val user = snapshot.getValue(DataUser::class.java)
+                        user.let {
+                            val dataUser = DataUser(
+                                username = it?.username
+                                    ?: formatNameFromEmail(it?.email.toString()),
+                                email = it?.email,
+                                passwordUid = uid,
+                                phone = it?.phone,
+                                imageUrl = it?.imageUrl
+                            )
+                            callback(dataUser)
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        callback(null)
+                    }
+                })
+        }
     }
 
+    fun sendEmailVerification(onComplete: (Boolean) -> Unit) {
+        val user = firebaseAuth.currentUser
+        user?.sendEmailVerification()
+            ?.addOnCompleteListener { task ->
+                onComplete(task.isSuccessful)
+            }
+    }
+
+    fun isEmailVerified(): Boolean {
+        val user = firebaseAuth.currentUser
+        return user?.isEmailVerified ?: false
+    }
 }

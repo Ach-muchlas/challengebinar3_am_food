@@ -1,5 +1,4 @@
 package com.am.amfood.data.lokal.entity
-import android.widget.ImageView
 import androidx.room.Entity
 
 @Entity(tableName = "Cart", primaryKeys = ["id"])

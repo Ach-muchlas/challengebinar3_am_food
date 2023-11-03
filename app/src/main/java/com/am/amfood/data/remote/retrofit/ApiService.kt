@@ -11,8 +11,6 @@ import retrofit2.http.POST
 interface ApiService  {
     @GET("listmenu")
     fun getALlMenu() : Call<MenuResponse>
-    @GET("listmenu")
-    suspend fun getListMenu() : MenuResponse
     @GET("category-menu")
     suspend fun getCategoryMenu() : CategoryResponse
 

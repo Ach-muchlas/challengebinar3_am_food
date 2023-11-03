@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/my_photos"
                 android:scaleType="centerCrop"
-                android:src="@drawable/me" />
+                tools:src="@drawable/me" />
         </androidx.cardview.widget.CardView>
 
         <include

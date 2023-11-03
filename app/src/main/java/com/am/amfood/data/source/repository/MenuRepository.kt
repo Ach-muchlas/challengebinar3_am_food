@@ -78,17 +78,4 @@ class MenuRepository(
             emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!!"))
         }
     }
-
-    companion object {
-        @Volatile
-        private var instance: MenuRepository? = null
-        fun getInstance(
-            apiService: ApiService,
-            menuDao: MenuDao,
-            appExecutors: AppExecutors
-        ): MenuRepository =
-            instance ?: synchronized(this) {
-                instance ?: MenuRepository(apiService, menuDao, appExecutors)
-            }.also { instance = it }
-    }
 }

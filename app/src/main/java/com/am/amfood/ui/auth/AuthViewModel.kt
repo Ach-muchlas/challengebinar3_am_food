@@ -38,10 +38,6 @@ class AuthViewModel(private val repository: AuthRepository) : ViewModel() {
     fun firebaseAuthWithGoogle(
         idToken: String,
         context: Context,
-        username: String,
-        email: String,
-        passwordUid: String,
-        imageUrl: String
     ) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         repository.firebaseAuth.signInWithCredential(credential)
@@ -51,11 +47,12 @@ class AuthViewModel(private val repository: AuthRepository) : ViewModel() {
                     val user = repository.firebaseAuth.currentUser
                     user?.uid?.let { uid ->
                         val userData = DataUser(
-                            username = username ?: formatNameFromEmail(email),
-                            email = email,
+                            username = user.displayName
+                                ?: formatNameFromEmail(user.email.toString()),
+                            email = user.email,
                             phone = user.phoneNumber,
                             passwordUid = uid,
-                            imageUrl = imageUrl
+                            imageUrl = user.photoUrl.toString()
                         )
                         /*save object data to firebase*/
                         val database = Firebase.database
@@ -79,75 +76,5 @@ class AuthViewModel(private val repository: AuthRepository) : ViewModel() {
             intentActivityUseFinish(context, MainActivity::class.java)
         }
     }
-
-    fun updateData(dataPath: String, newData: Map<String, Any>, callback: (Boolean) -> Unit) {
-        val database = Firebase.database
-        val reference = database.reference.child(dataPath)
-
-        reference.updateChildren(newData).addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                callback(true)
-            } else {
-                callback(false)
-            }
-        }
-    }
-//    fun signOut(firebaseAuth: FirebaseAuth, googleSignInClient: GoogleSignInClient) {
-//        firebaseAuth.signOut()
-//        googleSignInClient.signOut()
-//    }
-//
-//    fun signIn(
-//        googleSignInClient: GoogleSignInClient,
-//        resultLauncher: ActivityResultLauncher<Intent>
-//    ) {
-//        val signInIntent = googleSignInClient.signInIntent
-//        resultLauncher.launch(signInIntent)
-//    }
-
-//    fun register(
-//        auth: FirebaseAuth,
-//        email: String,
-//        password: String,
-//        phone: String,
-//        context: Context
-//    ) {
-//        /*Register with email and password*/
-//        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
-//            if (task.isSuccessful) {/*call firebase user */
-//                val user = auth.currentUser
-//                val userData = DataUser(
-//                    username = user?.displayName,
-//                    email = email,
-//                    phone = phone,
-//                    imageUrl = user?.photoUrl.toString()
-//                )
-//
-//                /*save object data to firebase*/
-//                val database = Firebase.database
-//                val ref = database.reference.child(ProfileFragment.USERS)
-//
-//                /*store user data with uid*/
-//                ref.child(user!!.uid).setValue(userData)
-//
-//                intentActivityUseFinish(context, MainActivity::class.java)
-//                toastMessage(context, "Registration Successful ")
-//            } else {
-//                toastMessage(context, "Registration Failed :  ${task.exception?.message}")
-//            }
-//        }
-//    }
-
-//    fun login(auth: FirebaseAuth, email: String, password: String, context: Context) {
-//        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
-//            if (task.isSuccessful) {
-//                intentActivityUseFinish(context, MainActivity::class.java)
-//                toastMessage(context, "Login Successful")
-//            } else {
-//                toastMessage(context, "Login Failed : ${task.exception}")
-//            }
-//        }
-//    }
-
 
 }

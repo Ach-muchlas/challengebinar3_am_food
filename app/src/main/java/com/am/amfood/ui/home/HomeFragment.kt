@@ -18,6 +18,7 @@ import com.am.amfood.ui.adapter.CategoryAdapter
 import com.am.amfood.ui.adapter.MenuAdapter
 import com.am.amfood.ui.profile.ProfileViewModel
 import com.am.amfood.utils.Utils.HOME_TO_CART
+import com.am.amfood.utils.Utils.HOME_TO_PROFILE
 import com.am.amfood.utils.Utils.navigateToDestination
 import com.am.amfood.utils.Utils.setUpBottomNavigation
 import com.am.amfood.utils.Utils.setUpVisibilityProgressbar
@@ -39,8 +40,9 @@ class HomeFragment : Fragment() {
         setUpBottomNavigation(activity, false)
         displaysListMenu()
         displayCategoryMenu()
-        navigateToProfile()
         setUpProfile()
+        navigateToProfile()
+        navigateToShop()
 
         return binding.root
     }
@@ -102,6 +104,7 @@ class HomeFragment : Fragment() {
         }
         setUpLayoutManager(isGrid)
         adapter.submitList(data)
+
         binding.recyclerViewMenu.adapter = adapter
     }
 
@@ -138,17 +141,18 @@ class HomeFragment : Fragment() {
     }
 
     private fun setUpProfile() {
-        profileViewModel.fetchDataCurrentUser()
-        profileViewModel.getDataCurrentUser()
+        profileViewModel.fetchDataUserWithDatabase()
+        profileViewModel.userData
             .observe(viewLifecycleOwner) { user ->
-                Glide.with(requireContext()).load(user.photoUrl).into(binding.cardProfile)
+                Glide.with(requireContext()).load(user.imageUrl ?: R.drawable.profile)
+                    .into(binding.cardProfile)
             }
-        navigateToProfile()
     }
 
     private fun navigateToProfile() {
         binding.cardProfile.setOnClickListener {
-            findNavController().navigate(R.id.action_navigation_home_to_navigation_profile)
+            navigateToDestination(HOME_TO_PROFILE, findNavController())
         }
     }
+
 }

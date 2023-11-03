@@ -42,6 +42,9 @@
             android:id="@+id/action_navigation_profile_to_navigation_home"
             app:destination="@id/navigation_home"
             app:popUpTo="@id/main_nav" />
+        <action
+            android:id="@+id/action_navigation_profile_to_updateProfileFragment"
+            app:destination="@id/updateProfileFragment" />
     </fragment>
 
     <fragment
@@ -93,6 +96,16 @@
         android:name="com.am.amfood.ui.auth.AuthActivity"
         android:label="activity_login"
         tools:layout="@layout/activity_auth" />
+
+    <fragment
+        android:id="@+id/updateProfileFragment"
+        android:name="com.am.amfood.ui.profile.update.UpdateProfileFragment"
+        android:label="UpdateProfileFragment"
+        tools:layout="@layout/fragment_update_profile" >
+        <action
+            android:id="@+id/action_updateProfileFragment_to_navigation_profile"
+            app:destination="@id/navigation_profile" />
+    </fragment>
 
 
 </navigation>

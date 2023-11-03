@@ -14,18 +14,19 @@ import com.am.amfood.data.lokal.entity.Cart
 interface CartDao {
 
     @Query("Select * from Cart")
-     fun getAllCart(): List<Cart>
+    fun getAllCart(): LiveData<List<Cart>>
+
 
     @Transaction
     suspend fun addCartOrUpdate(cart: Cart) {
         val existingCart = getOrderById(cart.nameMenu)
-        if (existingCart != null){
+        if (existingCart != null) {
             val newQuantity = existingCart.quantityMenu + cart.quantityMenu
             val newTotalAmount = existingCart.totalAmount + cart.totalAmount
             existingCart.quantityMenu = newQuantity
             existingCart.totalAmount = newTotalAmount
             update(existingCart)
-        }else{
+        } else {
             insert(cart)
         }
     }
@@ -43,7 +44,7 @@ interface CartDao {
     fun insert(cart: Cart)
 
     @Delete
-    fun delete(cart: Cart)
+    suspend fun delete(cart: Cart)
 
     @Update
     fun update(cart: Cart)
