@@ -1,5 +1,7 @@
 package com.am.amfood.data.remote.retrofit
 
+
+import com.am.amfood.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -11,7 +13,7 @@ object ApiConfig {
             HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
         val client = OkHttpClient.Builder().addInterceptor(loggingInterceptor).build()
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://testing.jasa-nikah-siri-amanah-profesional.com/")
+            .baseUrl(BuildConfig.API_KEY)
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()

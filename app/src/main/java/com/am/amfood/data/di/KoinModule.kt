@@ -43,7 +43,7 @@ object KoinModule {
 
     val utilsModule
         get() = module {
-            single { AppExecutors() }
+            single { AppExecutors }
         }
 
     val uiModule

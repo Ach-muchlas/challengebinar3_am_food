@@ -74,6 +74,7 @@ class CheckOutFragment : Fragment() {
                 binding.btnOrder.setOnClickListener {
                     setUpCheckOutOrder(order, totalPayment.toInt())
                     cartViewModel.deleteDataCart()
+                    toastMessage(requireContext(), "success")
                     navigateToDestination(CHECKOUT_TO_HOME, findNavController())
                     cartViewModel.messageToast.observe(viewLifecycleOwner) { message ->
                         if (message.isNotEmpty()) {
@@ -98,7 +99,6 @@ class CheckOutFragment : Fragment() {
                     when (resources.status) {
                         Status.LOADING -> {
                             toastMessage(requireContext(), "Wait....")
-                            /*include progress bar */
                         }
 
                         Status.SUCCESS -> {
