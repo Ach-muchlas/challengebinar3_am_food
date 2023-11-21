@@ -9,25 +9,25 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.am.amfood.R
+import com.am.amfood.data.lokal.entity.Cart
+import com.am.amfood.data.lokal.entity.MenuEntity
 import com.am.amfood.databinding.FragmentDetailBinding
-import com.am.amfood.model.Cart
-import com.am.amfood.model.Product
 import com.am.amfood.ui.cart.CartViewModel
 import com.am.amfood.utils.Utils.DETAIL_TO_CART
 import com.am.amfood.utils.Utils.DETAIL_TO_HOME
-import com.am.amfood.utils.Utils.formatCurrency
 import com.am.amfood.utils.Utils.navigateToDestination
-import com.am.amfood.utils.Utils.navigateToMaps
 import com.am.amfood.utils.Utils.setUpBottomNavigation
 import com.am.amfood.utils.Utils.toastMessage
+import com.bumptech.glide.Glide
+import org.koin.android.ext.android.inject
 
 class DetailFragment : Fragment() {
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
     private val args: DetailFragmentArgs by navArgs()
     private val viewModel: DetailViewModel by viewModels()
-    private val cartViewModel: CartViewModel by viewModels()
-
+    private val cartViewModel: CartViewModel by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,91 +37,93 @@ class DetailFragment : Fragment() {
         val view = binding.root
 
         (activity as AppCompatActivity).supportActionBar?.hide()
-
         setUpBottomNavigation(activity, true)
         setUpViewDetail()
         countQuantityOrder()
-        order()
-
 
         return view
     }
 
+    /*This function is used to display detailed menu data.*/
+    /*when the user presses one of the menus on home*/
     private fun setUpViewDetail() {
-        val product: Product = args.objectParcelable
-        viewModel.setValueProduct(product)
+        val menu: MenuEntity = args.objectParcelable
+        viewModel.setValueProduct(menu)
 
-        viewModel.card.observe(viewLifecycleOwner) { card ->
+        viewModel.menu.observe(viewLifecycleOwner) { menuItem ->
             binding.apply {
-                imageProduct.setImageResource(card.imageProduct)
+                Glide.with(binding.root.context).load(menuItem.imageUrl).into(binding.imageViewItem)
+                textViewNameItem.text = menuItem.title
+                textViewValueDesc.text = menuItem.description
+                textViewValuePrice.text = menuItem.priceString
+                textViewValueLocation.text = menuItem.address
+                Ratingbar.rating = 5.0F // this data is dummy data
                 cardBack.setOnClickListener {
+                    /*this function is used when user wants to return to home*/
                     navigateToDestination(DETAIL_TO_HOME, findNavController())
                 }
-                with(layoutContentDetail) {
-                    textViewNameItem.text = card.name
-                    textViewValueDesc.text = card.desc
-                    textViewValuePrice.text = formatCurrency(card.price)
-                    textViewValueLocation.text = card.location
-                    Ratingbar.rating = card.rate.toFloat()
-                    iconMaps.setOnClickListener {
-                        navigateToMaps(card.lat, card.long, requireContext())
-                    }
+                if (menu.isLike) {
+                    likeDescription.setImageResource(R.drawable.hati)
+                } else {
+                    likeDescription.setImageResource(R.drawable.love)
                 }
             }
         }
     }
 
+    /*This function is only for logic when the user presses the increment or decrement button*/
     private fun countQuantityOrder() {
         binding.apply {
-            with(layoutContentDetail) {
-                btnPlus.setOnClickListener {
-                    viewModel.incrementCountQuantity()
-                }
-                btnMinus.setOnClickListener {
-                    viewModel.decrementCountQuantity()
-                }
-                viewModel.counter.observe(viewLifecycleOwner) { result ->
-                    textViewQuantity.text = result.toString()
+            btnPlus.setOnClickListener {
+                viewModel.incrementCountQuantity()
+            }
+            btnMinus.setOnClickListener {
+                viewModel.decrementCountQuantity()
+            }
+            viewModel.counter.observe(viewLifecycleOwner) { result ->
+                textViewQuantity.text = result.toString()
+                if (result != 0) {
+                    order()
                 }
             }
         }
     }
 
+    /*This function is used to order menu items*/
+    /*This function runs when the user clicks the order button*/
     private fun order() {
         binding.apply {
-            with(layoutContentDetail) {
-                btnOrder.setOnClickListener {
-                    addOrder()
-                    navigateToDestination(DETAIL_TO_CART, findNavController())
-                }
+            btnOrder.setOnClickListener {
+                addOrder()
+                navigateToDestination(DETAIL_TO_CART, findNavController())
             }
         }
     }
 
+    /*This function is used to enter menu data needed when saving data in the cart database*/
     private fun addOrder() {
-        val product: Product = args.objectParcelable
-        val photo = product.photo
-
-        val name = binding.layoutContentDetail.textViewNameItem.text.toString()
-        val quantity = binding.layoutContentDetail.textViewQuantity.text.toString()
-        val price = product.price
+        val menu: MenuEntity = args.objectParcelable
+        val photo = menu.imageUrl
+        val name = menu.title
+        val quantity = binding.textViewQuantity.text.toString()
+        val price = menu.price
+        val totalAmount = price.times(quantity.toInt())
 
         val data = Cart(
             null,
             nameMenu = name,
             quantityMenu = quantity.toInt(),
             photoMenu = photo,
-            priceMenu = price,
-            totalAmount = price * quantity.toInt(),
-
+            priceMenu = price.toDouble(),
+            totalAmount = totalAmount.toDouble(),
         )
 
-        cartViewModel.addCart(data)
+        /*store data to cart database */
+        cartViewModel.addDataOrUpdateCartData(data)
 
+        /*displays a toast if successful or failed when store data to database */
         cartViewModel.messageToast.observe(viewLifecycleOwner) { message ->
-            if (message.isNotEmpty()) {
-                toastMessage(requireContext(), message)
-            }
+            toastMessage(requireContext(), message)
         }
     }
 

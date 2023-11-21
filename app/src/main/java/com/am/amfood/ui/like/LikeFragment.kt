@@ -5,23 +5,50 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.am.amfood.R
 import com.am.amfood.databinding.FragmentLikeBinding
+import com.am.amfood.ui.adapter.MenuAdapter
+import com.am.amfood.ui.home.HomeViewModel
+import org.koin.android.ext.android.inject
 
 class LikeFragment : Fragment() {
-    private var _binding : FragmentLikeBinding? = null
+    private var _binding: FragmentLikeBinding? = null
     private val binding get() = _binding!!
-
+    private val homeViewModel: HomeViewModel by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentLikeBinding.inflate(inflater, container, false)
+        _binding = FragmentLikeBinding.inflate(layoutInflater, container, false)
+        setUpAppBar()
+        setUpLikeAdapter()
         return binding.root
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
+    private fun setUpAppBar() {
+        binding.appbar.apply {
+            btnBack.visibility = View.GONE
+            btnEdit.visibility = View.GONE
+            textViewAppbar.text = getString(R.string.like)
+        }
     }
+
+    private fun setUpLikeAdapter() {
+        val adapter = MenuAdapter(false) { menu ->
+            if (menu.isLike) {
+                homeViewModel.deleteLike(menu)
+            } else {
+                homeViewModel.saveLike(menu)
+            }
+        }
+
+        homeViewModel.getLikeMenu().observe(viewLifecycleOwner) { likeMenu ->
+            adapter.submitList(likeMenu)
+            binding.rvMenuLike.adapter = adapter
+            binding.rvMenuLike.layoutManager = LinearLayoutManager(requireContext())
+        }
+    }
+
 }

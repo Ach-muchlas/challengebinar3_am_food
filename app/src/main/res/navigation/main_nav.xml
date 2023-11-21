@@ -15,14 +15,13 @@
             app:destination="@id/detailFragment" />
         <action
             android:id="@+id/action_navigation_home_to_navigation_profile"
-            app:destination="@id/navigation_profile" />
+            app:destination="@id/navigation_profile"
+            app:launchSingleTop="true"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_cart"
+            app:destination="@id/navigation_cart" />
     </fragment>
-
-    <fragment
-        android:id="@+id/navigation_like"
-        android:name="com.am.amfood.ui.like.LikeFragment"
-        android:label="@string/title_like"
-        tools:layout="@layout/fragment_like" />
 
     <fragment
         android:id="@+id/navigation_cart"
@@ -38,22 +37,31 @@
         android:id="@+id/navigation_profile"
         android:name="com.am.amfood.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
-        tools:layout="@layout/fragment_profile" >
+        tools:layout="@layout/fragment_profile">
         <action
             android:id="@+id/action_navigation_profile_to_navigation_home"
             app:destination="@id/navigation_home"
             app:popUpTo="@id/main_nav" />
+        <action
+            android:id="@+id/action_navigation_profile_to_updateProfileFragment"
+            app:destination="@id/updateProfileFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/navigation_like"
+        android:name="com.am.amfood.ui.like.LikeFragment"
+        android:label="fragment_like"
+        tools:layout="@layout/fragment_like" />
 
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.am.amfood.ui.detail.DetailFragment"
         android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail" >
+        tools:layout="@layout/fragment_detail">
 
         <argument
             android:name="object_parcelable"
-            app:argType="com.am.amfood.model.Product" />
+            app:argType="com.am.amfood.data.lokal.entity.MenuEntity" />
         <argument
             android:name="name"
             app:argType="string"
@@ -82,6 +90,21 @@
         <action
             android:id="@+id/action_checkOutFragment_to_navigation_home"
             app:destination="@id/navigation_home" />
+    </fragment>
+    <activity
+        android:id="@+id/loginActivity"
+        android:name="com.am.amfood.ui.auth.AuthActivity"
+        android:label="activity_login"
+        tools:layout="@layout/activity_auth" />
+
+    <fragment
+        android:id="@+id/updateProfileFragment"
+        android:name="com.am.amfood.ui.profile.update.UpdateProfileFragment"
+        android:label="UpdateProfileFragment"
+        tools:layout="@layout/fragment_update_profile" >
+        <action
+            android:id="@+id/action_updateProfileFragment_to_navigation_profile"
+            app:destination="@id/navigation_profile" />
     </fragment>
 
 

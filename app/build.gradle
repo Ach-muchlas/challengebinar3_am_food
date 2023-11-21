@@ -4,6 +4,8 @@ plugins {
     id 'kotlin-parcelize'
     id "androidx.navigation.safeargs"
     id("com.google.devtools.ksp")
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
 }
 
 android {
@@ -21,14 +23,29 @@ android {
 
     buildFeatures{
         viewBinding true
+        buildConfig true
     }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "API_KEY", "\"https://api-restaurant.binaracademy.org\""
+            signingConfig signingConfigs.debug
         }
+        dev{
+            initWith(getByName("debug"))
+            buildConfigField "String", "API_KEY", "\"https://b3d11e60-af41-4df7-8025-b721eab4d9f8.mock.pstmn.io\""
+        }
+        prod{
+            initWith(getByName("debug"))
+            buildConfigField "String", "API_KEY", "\"https://38208611-a7d4-4fa7-90b6-18381abe0a14.mock.pstmn.io\""
+        }
+        getByName("release")
+        getByName("dev")
+        getByName("prod")
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
@@ -43,8 +60,12 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.test:core-ktx:1.5.0'
 
+    /*testing with Junit and espresso*/
     testImplementation 'junit:junit:4.13.2'
+    testImplementation "org.mockito:mockito-core:4.4.0"
+    testImplementation "org.mockito.kotlin:mockito-kotlin:4.0.0"
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
@@ -55,15 +76,52 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.2"
 
 
+    /*coroutine*/
+    implementation "androidx.activity:activity-ktx:1.8.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2"
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+
     // library untuk circle image
     implementation("de.hdodenhof:circleimageview:3.1.0")
-
 
     //room
     implementation("androidx.room:room-runtime:2.5.2")
     ksp("androidx.room:room-compiler:2.5.2")
     annotationProcessor "androidx.room:room-compiler:2.5.2"
+    implementation "androidx.room:room-ktx:2.4.2"
 
-    implementation "androidx.cardview:cardview:1.0.0"
+    /*Retrofit*/
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+
+    /*firebase*/
+    implementation("com.google.firebase:firebase-auth-ktx:22.1.0")
+    implementation("com.google.android.gms:play-services-auth:20.6.0")
+    implementation 'com.google.firebase:firebase-database-ktx:20.2.2'
+    implementation("com.firebaseui:firebase-ui-database:8.0.0")
+    implementation 'com.google.firebase:firebase-crashlytics:18.5.0'
+    implementation 'com.google.firebase:firebase-analytics:21.4.0'
+
+    /*Koin Dependency Injection*/
+    implementation("io.insert-koin:koin-core:3.2.2")
+    implementation("io.insert-koin:koin-android:3.3.0")
+    implementation("io.insert-koin:koin-android-compat:3.3.0")
+    implementation("io.insert-koin:koin-androidx-workmanager:3.3.0")
+    implementation("io.insert-koin:koin-androidx-navigation:3.3.0")
+
+    /*espresso*/
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test:rules:1.0.2'
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1"
+    testImplementation "androidx.arch.core:core-testing:2.2.0"
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1'
+
+    //special instrumentation testing
+    androidTestImplementation "androidx.arch.core:core-testing:2.2.0" // InstantTaskExecutorRule
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1" //TestDispatcher
 
 }

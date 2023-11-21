@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "618032969678",
+    "firebase_url": "https://challenge5-1bf5f-default-rtdb.firebaseio.com",
+    "project_id": "challenge5-1bf5f",
+    "storage_bucket": "challenge5-1bf5f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:618032969678:android:0f6ca3dc0f0688fd3c1d9f",
+        "android_client_info": {
+          "package_name": "com.am.amfood"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "618032969678-lof43t47n999hc4gdimbmfb0mahrhjja.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.am.amfood",
+            "certificate_hash": "7fc1f03fcc41783192e67cab3302c6a9ed72642e"
+          }
+        },
+        {
+          "client_id": "618032969678-n9mh6ilg8dqgfg5vj8dggbk27ic9c8sv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBz9TgkCt8fA0tnR1s6zNZCbUeO7knHdQ8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "618032969678-n9mh6ilg8dqgfg5vj8dggbk27ic9c8sv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

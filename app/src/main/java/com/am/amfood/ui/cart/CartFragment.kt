@@ -5,32 +5,40 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.am.amfood.adapter.CartAdapter
 import com.am.amfood.databinding.FragmentCartBinding
+import com.am.amfood.ui.adapter.CartAdapter
 import com.am.amfood.utils.Utils.CART_TO_CHECKOUT
 import com.am.amfood.utils.Utils.formatCurrency
 import com.am.amfood.utils.Utils.navigateToDestination
 import com.am.amfood.utils.Utils.setUpBottomNavigation
+import org.koin.android.ext.android.inject
 
 class CartFragment : Fragment() {
     private var _binding: FragmentCartBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: CartViewModel by viewModels()
+    private val viewModel: CartViewModel by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCartBinding.inflate(inflater, container, false)
-        binding.appbar.btnBack.visibility = View.GONE
 
+        setUpAppBar()
         setUpCart()
         setUpBottomNavigation(activity, false)
-        orderItem()
+        getTotalPayment()
+
 
         return binding.root
+    }
+
+    private fun setUpAppBar() {
+        binding.appbar.apply {
+            btnBack.visibility = View.GONE
+            btnEdit.visibility = View.GONE
+        }
     }
 
     private fun orderItem() {
@@ -40,33 +48,42 @@ class CartFragment : Fragment() {
     }
 
     private fun setUpCart() {
-        viewModel.getAllCart().observe(viewLifecycleOwner) { list ->
-            val adapter = CartAdapter(list)
-            binding.rvCart.layoutManager = LinearLayoutManager(requireContext())
-            binding.rvCart.adapter = adapter
-
+        viewModel.getAllCartaData().observe(viewLifecycleOwner) { listDataCart ->
+            val adapter = CartAdapter(listDataCart)
+            binding.recyclerViewCart.layoutManager = LinearLayoutManager(requireContext())
+            binding.recyclerViewCart.adapter = adapter
 
             adapter.setOnDeleteClickListener { cartItem ->
                 viewModel.deleteItem(cartItem)
             }
 
-            adapter.setOnPlusClickListener { cart ->
-                viewModel.increment(cart)
+            adapter.setOnPlusClickListener { cartItem ->
+                viewModel.increment(cartItem)
 
             }
 
-            adapter.setOnMinusClickListener { cart ->
-                viewModel.decrement(cart)
-
-            }
-            adapter.setAddNote { note ->
-                viewModel.updateCart(note)
+            adapter.setOnMinusClickListener { cartItem ->
+                viewModel.decrement(cartItem)
             }
 
-            viewModel.getTotalPayment().observe(viewLifecycleOwner) { total ->
-                binding.layoutCheckOut.textViewTotalPrice.text = formatCurrency(total)
+            adapter.setAddNote { cartNote ->
+                viewModel.updateCart(cartNote)
             }
 
+
+            if (listDataCart.isEmpty()) {
+                binding.textEmptyCart.visibility = View.VISIBLE
+            } else {
+                binding.textEmptyCart.visibility = View.GONE
+                orderItem()
+            }
+        }
+    }
+
+    private fun getTotalPayment() {
+        viewModel.getTotalPaymentData().observe(viewLifecycleOwner) { totalPayment ->
+            binding.layoutCheckOut.textViewContentValueTotalPrice.text =
+                formatCurrency(totalPayment)
         }
     }
 
@@ -74,5 +91,4 @@ class CartFragment : Fragment() {
         super.onDestroy()
         _binding = null
     }
-
 }

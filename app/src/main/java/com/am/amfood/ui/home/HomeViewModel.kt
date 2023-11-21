@@ -1,55 +1,34 @@
 package com.am.amfood.ui.home
 
-import android.app.Application
-import android.content.Context
-import android.widget.ImageView
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.am.amfood.R
-import com.am.amfood.adapter.MenuAdapter
-import com.am.amfood.model.dummyDataCard
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.am.amfood.data.lokal.entity.MenuEntity
+import com.am.amfood.data.source.repository.MenuRepository
+import com.am.amfood.data.source.sharedpreferences.Preferences
+import kotlinx.coroutines.launch
 
-class HomeViewModel(application: Application) : AndroidViewModel(application) {
+class HomeViewModel(private val repository: MenuRepository) :
+    ViewModel() {
 
-    private val PREF_LAYOUT = "layout_pref"
-
-    private val _isGrid = MutableLiveData<Boolean>()
-    val isGrid: LiveData<Boolean> get() = _isGrid
-
-    private val sharedPreferences =
-        application.getSharedPreferences("menu_prefs", Context.MODE_PRIVATE)
-
-    init {
-        _isGrid.value = sharedPreferences.getBoolean(PREF_LAYOUT, true)
+    private val preferences = Preferences.getInstance()
+    val isGridlayout: LiveData<Boolean> get() = preferences.isGrid
+    fun setUpIsGridLayout() {
+        preferences.setIsGridLayout()
     }
+    fun getListMenu() = repository.getListMenu()
+    fun getLikeMenu() = repository.getLike()
 
-    fun changeLayout() {
-        val isGridLayout = _isGrid.value ?: true
-        _isGrid.value = !isGridLayout
-
-        sharedPreferences.edit().putBoolean(PREF_LAYOUT, !isGridLayout).apply()
-    }
-
-    fun setUpChangeIcon(imageView: ImageView, isGrid: Boolean) {
-        val iconGrid = R.drawable.more
-        val iconList = R.drawable.list
-        imageView.setImageResource(if (isGrid) iconGrid else iconList)
-    }
-
-    fun setUpLayoutManager(context: Context, recyclerView: RecyclerView, isGrid: Boolean) {
-        val layoutManager = if (isGrid) {
-            GridLayoutManager(context, 2)
-        } else {
-            LinearLayoutManager(context)
+    fun getCategoryMenu() = repository.getCategoryMenu()
+    fun saveLike(menu: MenuEntity) {
+        viewModelScope.launch {
+            repository.setIsLike(menu, true)
         }
-        recyclerView.layoutManager = layoutManager
-        recyclerView.adapter = MenuAdapter(dummyDataCard, isGrid)
     }
 
-
-
+    fun deleteLike(menu: MenuEntity) {
+        viewModelScope.launch {
+            repository.setIsLike(menu, false)
+        }
+    }
 }

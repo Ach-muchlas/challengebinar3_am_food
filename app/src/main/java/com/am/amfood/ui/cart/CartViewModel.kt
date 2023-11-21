@@ -1,80 +1,79 @@
 package com.am.amfood.ui.cart
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.am.amfood.data.lokal.CartDatabase
-import com.am.amfood.data.CartRepository
-import com.am.amfood.model.Cart
+import com.am.amfood.data.lokal.entity.Cart
+import com.am.amfood.data.source.repository.CartRepository
 import kotlinx.coroutines.launch
 
-class CartViewModel(application: Application) : AndroidViewModel(application) {
+class CartViewModel(private val repository: CartRepository) : ViewModel() {
 
-    private val repository: CartRepository
-
+    /*to accommodate messages*/
     private val _messageToast = MutableLiveData("")
     val messageToast: LiveData<String> = _messageToast
 
-    init {
-        val dao = CartDatabase.getDatabaseInstance(application).cartDao()
-        repository = CartRepository(dao)
+    /*function is used to receive cart data in the cart database*/
+    fun getAllCartaData() = repository.getAllDataCart()
+
+    /*function is used to receive total payment in the cart database*/
+    fun getTotalPaymentData() = repository.getDataTotalPayment()
+
+    /*function is used is used to check data additions or updates to cart database*/
+    fun addDataOrUpdateCartData(cart: Cart) {
+        viewModelScope.launch {
+            try {
+                repository.addDataOrUpdateCartData(cart)
+                _messageToast.postValue("Successful send data")
+            } catch (exception: Exception) {
+                _messageToast.value = "Error Occurred send data ${exception.message}"
+            }
+        }
     }
 
-    fun getTotalPayment(): LiveData<Double> {
-        return repository.getTotalPayment()
-    }
-
+    /*function is used update data cart in cart database*/
     fun updateCart(cart: Cart) {
         viewModelScope.launch {
             try {
                 repository.updateCart(cart)
-                _messageToast.value = "Data Saved"
+                _messageToast.value = "Successful Update Data"
             } catch (e: Exception) {
-                _messageToast.value = "Gagal Saved : $e"
+                _messageToast.value = "Data failed to save : ${e.message}"
             }
-
         }
     }
 
+    /*function is add quantity and change total payment*/
     fun increment(cart: Cart) {
         cart.quantityMenu++
         cart.totalAmount = cart.priceMenu * cart.quantityMenu
         updateCart(cart)
     }
 
+    /*function to reduce quantity and change total payment*/
     fun decrement(cart: Cart) {
         if (cart.quantityMenu > 0) {
             cart.quantityMenu--
             cart.totalAmount = cart.priceMenu * cart.quantityMenu
             updateCart(cart)
-        }
-    }
-
-    fun addCart(cart: Cart) {
-        viewModelScope.launch {
-            try {
-                repository.insertCart(cart)
-                _messageToast.value = "Data Saved"
-            } catch (exc: Exception) {
-                _messageToast.value = "Gagal Saved : $exc"
+            if (cart.quantityMenu == 0) {
+                deleteItem(cart)
             }
         }
     }
 
-    fun getAllCart(): LiveData<List<Cart>> = repository.getAllCart()
-
+    /*function is used delete item cart*/
     fun deleteItem(cart: Cart) {
         viewModelScope.launch {
             repository.deleteItem(cart)
         }
     }
 
+    /*function is used delete all data cart */
     fun deleteDataCart() {
         viewModelScope.launch {
             repository.deleteAll()
         }
     }
-
 }
