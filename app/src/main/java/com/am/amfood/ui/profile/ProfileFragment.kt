@@ -46,11 +46,11 @@ class ProfileFragment : Fragment() {
         viewModel.fetchDataUserWithDatabase()
         viewModel.userData.observe(viewLifecycleOwner) { dataUser ->
             binding.textValueUsername.text =
-                dataUser.username ?: formatNameFromEmail(dataUser.email.toString())
-            binding.textValueEmail.text = dataUser.email
-            binding.textValuePassword.text = dataUser.passwordUid
-            binding.textValuePhone.text = dataUser.phone
-            Glide.with(requireContext()).load(dataUser.imageUrl ?: R.drawable.profile)
+                dataUser?.displayName ?: formatNameFromEmail(dataUser?.email.toString())
+            binding.textValueEmail.text = dataUser?.email
+            binding.textValuePassword.text = dataUser?.uid
+            binding.textValuePhone.text = dataUser?.phoneNumber ?: "08786579080"
+            Glide.with(requireContext()).load(dataUser?.photoUrl ?: R.drawable.profile)
                 .into(binding.imageViewAvatar)
         }
     }

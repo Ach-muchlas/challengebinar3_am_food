@@ -93,7 +93,7 @@ class CheckOutFragment : Fragment() {
             viewModel.checkOutOrder(
                 order = order,
                 total = total,
-                username = user.username.toString()
+                username = user?.displayName.toString()
             )
                 .observe(viewLifecycleOwner) { resources ->
                     when (resources.status) {

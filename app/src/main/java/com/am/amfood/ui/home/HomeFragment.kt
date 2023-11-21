@@ -144,7 +144,7 @@ class HomeFragment : Fragment() {
         profileViewModel.fetchDataUserWithDatabase()
         profileViewModel.userData
             .observe(viewLifecycleOwner) { user ->
-                Glide.with(requireContext()).load(user.imageUrl ?: R.drawable.profile)
+                Glide.with(requireContext()).load(user?.photoUrl)
                     .into(binding.cardProfile)
             }
     }
